@@ -1,4 +1,38 @@
-baseURL = 'https://yehzu.github.io/'
-languageCode = 'en-us'
-title = 'My New Hugo Site'
-theme = 'ananke'
+baseURL = "https://yehzu.github.io/"
+languageCode = "en-us"
+title = "小葉隨筆"
+theme = "PaperMod"
+
+[params]
+    defaultTheme = "light" # auto, light, dark
+    description = "There is no try."
+    author = "yehzu"
+
+    [params.homeInfoParams]
+        Title = "Hi there 👋"
+        Content = "Welcome to my blog."
+
+    [[params.socialIcons]]
+        name = "github"
+        url = "https://github.com/yehzu"
+
+    [[params.socialIcons]]
+        name = "linkedin"
+        url = "https://www.linkedin.com/in/yehzu/"
+
+[menu]
+  [[menu.main]]
+    identifier = "archives"
+    name = "Archives"
+    url = "/archives/"
+    weight = 10
+  [[menu.main]]
+    identifier = "search"
+    name = "Search"
+    url = "/search/"
+    weight = 20
+  [[menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 30
