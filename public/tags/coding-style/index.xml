@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>小葉隨筆</title>
+    <link>http://localhost:1313/tags/coding-style/</link>
+    <description>Recent content on 小葉隨筆</description>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>zh-tw</language>
+    <lastBuildDate>Sat, 30 Apr 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/coding-style/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>程式碼共用</title>
+      <link>http://localhost:1313/posts/2022-04-30-4/</link>
+      <pubDate>Sat, 30 Apr 2022 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2022-04-30-4/</guid>
+      <description>&lt;p&gt;繼上一篇淺談程式可讀性，我發覺，與其去談怎麼樣變成一個軟體工程大師，倒不如談談怎樣不要寫出雷雷的東西，比較容易也比較不會有什麼大爭議。軟體工程對於大師還是有不同的層次與見解，滿難去定義的，但是日常維護程式的痛，大家的經驗應該都滿類似的。畢竟，遇到好的或是普通的程式通常不會有什麼特別的感覺（除非是真的遇到
+masterpiece 且剛好看得懂），會被記住的都是那些難懂的程式碼。所以這篇就來談談也是很常見的「共用」程式碼議題。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>繼上一篇淺談程式可讀性，我發覺，與其去談怎麼樣變成一個軟體工程大師，倒不如談談怎樣不要寫出雷雷的東西，比較容易也比較不會有什麼大爭議。軟體工程對於大師還是有不同的層次與見解，滿難去定義的，但是日常維護程式的痛，大家的經驗應該都滿類似的。畢竟，遇到好的或是普通的程式通常不會有什麼特別的感覺（除非是真的遇到
+masterpiece 且剛好看得懂），會被記住的都是那些難懂的程式碼。所以這篇就來談談也是很常見的「共用」程式碼議題。</p>
+<p>每個工程師從開始學程式，到進入職場實戰，一定都有聽過程式碼要盡量能夠共用，才不會一樣的事情需要重複做。嚴格來說，這個概念從一開始學習函式時，就已經烙印在每個工程師的腦中了，舉一個簡單的例子：</p>
+<pre><code>public static void main(String[] args) {
+  // 把 fibonacci sequence 的生成寫成函式以避免使用時都要重寫一遍
+  IntStream.range(1, 11)
+    .forEach(n -&gt; {
+      System.out.println(String.format(&quot;fib(%d) = %d &quot;, n, fibSeq(n)));
+    });
+}
+
+public static int fibSeq(int n) throws IllegalArgumentException {
+  if (n &lt; 0) throw new IllegalArgumentException(&quot;n should be greater or equal to 0&quot;);
+  else if (n == 0 || n == 1) return 1;
+  else return fibSeq(n-1) + fibSeq(n-2);
+}
+</code></pre>
+<p>程式碼重複利用，絕對是軟體工程裡非常重要的一件事。它可以大幅增加生產力，以及降低錯誤的發生率，就算中間有
+bug，也很容易在修改一個地方之後，其他有使用到這個函式的地方也一併修好了。而學完函式，進入物件導向的世界後，消除重複程式碼的工具又多了不少種，像是繼承或泛型都是常用的手段，而最易「入手」的就是繼承。由於物件導向是以物件為主，「繼承」如此自然、好聯想、且容易在原有程式下擴充的特性，讓非常多工程師想優先透過繼承的手法來共用程式碼片段。但錯誤地共用程式，往往會造成後續維護的大問題。主要的原因有以下幾個：</p>
+<ol>
+<li>不太像的東西硬要共用</li>
+<li>看到很像的東西就想共用</li>
+<li>以上的情況，再用「繼承」來共用</li>
+</ol>
+<p>以下，我就針對這三點說明及給些例子！</p>
+<h2 id="不太像的東西也硬要共用">不太像的東西也硬要共用</h2>
+<p>真的假的？這是在幹麼？XD</p>
+<p>這的確是實務上常出現的情況哦！有些工程師太想要達成「共用」，就算兩段程式看起來只有 30%
+的相似，也還是要把他們抽出成一個函式。畢竟，只要函式的參數夠多，再怎麼樣不能共用的東西，也能抽成一個函式呀！於是，很可能可以看到這種程式碼（是個很不 ok
+的例子）：</p>
+<pre><code>private String getQuery(String target, String condition, int returnCnt) {
+  // 為了你的程式安全著想，實務上千萬別這樣寫 SQL 去 query DB...這只是範例
+  return String.format(&quot;SELECT * FROM %s WHERE %s LIMIT %d;&quot;, target, condition, returnCnt);
+}
+
+// 使用的時候…
+public String getAdultsQuery() {
+  return getQuery(&quot;users&quot;, &quot;age &gt;= 18&quot;, 10);
+}
+
+public String getComicBooksQuery() {
+  return getQuery(&quot;books&quot;, &quot;type = \&quot;comics\&quot;&quot;, 10);
+}
+</code></pre>
+<p>這樣的共用方式，會導致 <code>getAdultsQuery</code> 和 <code>getComicBooksQuery</code> 兩個東西被 couple 在一起，當今天
+<code>getAdultsQuery</code>
+不需要撈回全部欄位的時候，這個共用函式只有兩條路：一是修改這個函式需要帶的參數，另一個就是沒辦法再共用這個函式。假設選擇了前面修改參數這條路，那麼程式會變成這樣：</p>
+<pre><code>private String getQuery(String columns, String target, String condition, int returnCnt) {
+  return String.format(&quot;SELECT %s FROM %s WHERE %s LIMIT %d;&quot;, columns, target, condition, returnCnt);
+}
+
+// 使用的時候…
+public String getAdultsQuery() {
+  return getQuery(&quot;name, age&quot;, &quot;users&quot;, &quot;age &gt;= 18&quot;, 10);
+}
+
+public String getComicBooksQuery() {
+  return getQuery(&quot;*&quot;, &quot;books&quot;, &quot;type = \&quot;comics\&quot;&quot;, 10);
+}
+</code></pre>
+<p>變成這樣，其實也沒有真的共用什麼東西了，反而讓程式碼變得難以閱讀及維護。針對這一點，當抽出的共用函式的參數太多且彼此間關聯很薄弱的時候，就要有所警覺：是否這兩段程式碼不該共用？</p>
+<h2 id="看到很像的東西就想共用">看到很像的東西就想共用</h2>
+<p>很像的東西，不就可以抽成共用嗎？這可就大錯特錯了。有的時候，就算長得一模一樣，也未必是應該要抽成共用的。能不能共用，要看的是這個行為的「意圖」是否是一樣的，若只是剛好長得一樣而意圖不同，那只要其中一邊稍有調整，這段程式碼立刻就又會分道揚鑣。</p>
+<p>這邊舉個例子，某線上商城的會員制度分為「一般會員」及「VIP 會員」，若今天不同資格的訂定方式有兩種：</p>
+<ol>
+<li>「一般會員」可以享商品九折優惠，滿三千免運費。「VIP 會員」可以享商品九折優惠，滿三千免運費，滿五千整筆訂單再打八五折。</li>
+<li>「一般會員」可以享商品九折優惠，滿三千免運費。「VIP 會員」除了享有「一般會員」的權利之外，還能多享有滿五千整筆訂單再打八五折。</li>
+</ol>
+<p>以上 1 和 2 的對於一般會員和 VIP 會員的條件是一模一樣的，但在 1 的情境之下， VIP 會員不該和一般會員共用前半段優惠的算式，在 2
+的情境下則可以。因為 1 的情境下，一般會員和 VIP 會員的「享商品九折優惠，滿三千免運費」是剛好一樣但本質不一樣。而在 2
+裡面的才是真的一樣。最簡單看出這差異的方式是，假設今天調整了一般會員的優惠變成了「享商品九五折」，在 1 的條款下 VIP
+會員仍享有商品九折優惠，滿三千免運費，但 2 就沒有了。若沒分清楚 1 和 2 的差異，在實作 1 時用了 2 的作法，就有可能發生「改 A 壞
+B」的情況了（改了一般會員的權利不小心也動到 VIP 會員的）。</p>
+<p>所以當想要把兩個看起來很像的東西，或是一樣的東西抽成共用的時候，先試想一些極端情況來看看這兩個東西還是否一樣。若還是能保持一致的話，那麼抽成共用就不會有什麼大問題，反之，可能就要再斟酌一下下，或是看是否有更小幅度、但確實是真正的可共用的部分。</p>
+<h2 id="利用繼承共用">利用繼承共用</h2>
+<p>關於繼承的「危害」，有許多的不錯的文章已經探討過了，繼承關係會讓這兩個類別產生強藕合，若使用不當，只能享受其「共用」好處的一部分，而同時讓程式難以理解及修改。</p>
+<p>其實最主要的錯不在繼承，而是一般在使用時，很少人會真正仔細地去思考里式替代原則 (Liskov Substitution Principle,
+LSP)。什麼是里式替代原則？原文如下：</p>
+<p><img alt="Let  \\phi(x) be a property provable about objects x of type T. Then\n\\phi(y) should be true for objects y of type S where S is a subtype of\nT." loading="lazy" src="https://latex.codecogs.com/svg.image?\\\\text{Let&space;}\\\\phi\\(x\\)\\\\text{&space;be&space;a&space;property&space;provable&space;about&space;objects&space;}x\\\\text{&space;of&space;type&space;}T\\\\text{.}&space;\\\\\\\\\\\\text{Then&space;}\\\\phi\\(y\\)\\\\text{&space;should&space;be&space;true&space;for&space;objects&space;}y\\\\text{&space;of&space;type&space;}S\\\\text{&space;where&space;}S\\\\text{&space;is&space;a&space;subtype&space;of&space;}T\\\\text{.}"></p>
+<p>原始嚴謹的定義是如此，但在 OOP
+的脈絡中簡單的大意是說，子類別繼承下來的行為，應該要保持和父類別一樣，在一個使用父類別的程式中，把父類別抽換成子類別後，其結果不會被影響（在這個意義下，子類別和父類別是可互相替代的）。這裡的父類別包含一般類別、抽象類別
+(Abstract Class) 及介面（Interface） 。在常見的介紹里式替換的文章裡，通常都會用 Shape / Square /
+Rectangle 算面積作為範例，而這樣簡單的範例就已和一般直覺的行為不同了，所以在使用繼承時，沒有好好地釐清兩個 class
+之前的關係的話，通常都會誤用。因此現在一般都會認為若無法百分之百確定兩者的關係，不如使用「組合」 (composition /has-A)
+取代「繼承」(is-A)。</p>
+<p>但更多時候，很多工程師連想到要去思考這個關係都沒有，單純只是想要「共用」。一個常見的利用繼承共用的例子如下：原本有一個 Controller 會先用
+user ID 取出其 User 的 meta 資料，再拿出他追蹤的前十個使用者資料。新的需求是要有一個新的 Controller ，先用 user ID
+取出其 User 的 meta 資料，再拿出他按讚的貼文。原本的程式可能長得像這樣：</p>
+<pre><code>public class FollowedUserController {  
+  public UserMetaRepo userMetaRepo; // assigned in the constructor
+  public UserRepo userRepo; // assigned in the constructor
+
+  public List&lt;User&gt; getFollowedUsers(String userId) {
+    return userMetaRepo.getFollowedUserIds(userId).stream()
+      .map(userRepo::getUser)
+      .collect(toList());
+  }
+}
+</code></pre>
+<p>新的需求，在前半段基本上是一樣的！都是要先去用 user ID 拿回 user meta，所以就有一種改法會是長這個樣子：</p>
+<pre><code>public class UserMetaController {
+  private UserMetaRepo userMetaRepo; // assigned in the constructor
+  protected List&lt;UserMeta&gt; getUserMeta(String id) {
+    return userMetaRepo.getFollowedUserIds(id);
+  } 
+}
+
+public class FollowedUserController extends UserMetaController {  
+  public UserRepo userRepo; // asigned in the constructor
+
+  public List&lt;User&gt; getFollowedUsers(String id) {
+    return getUserMeta(id).stream()
+      .map(userRepo::getUser)
+      .collect(toList());
+  }
+}
+
+public class LikedPostController extends UserMetaController {  
+  public PostRepo postRepo; // asigned in the constructor
+
+  public List&lt;Post&gt; getLikedPosts(String id) {
+    return getUserMeta(id).stream()
+      .map(postRepo::getLikedPost)
+      .collect(toList());
+  }
+}
+</code></pre>
+<p>可以看到，<code>FollowedUserController</code> 和 <code>LikedPostController</code> 在概念上完全不同的東西，因為「實作」的相似而透過
+<code>UserMetaController</code> 被藕合在一起了。這產生了兩個問題：</p>
+<ul>
+<li>一個還未爬完整個 code base 的人，會無法了解為什麼 <code>UserMetaController</code> 和 <code>FollowedUserController/LikedPostController</code> 有什麼關係？而這個繼承關係也並不直覺。</li>
+<li>未來若 <code>LikedPostController</code> 的使用流程改變，改成可以直接用 user ID 去 <code>postRepo </code>拿到相對應的 posts，但 <code>FollowedUserController</code> 的流程沒有改變，此時整個繼承關係都要修改。</li>
+</ul>
+<h2 id="要怎麼共用">要怎麼共用？！</h2>
+<p>這樣一講，感覺好像很多都不能共用了吧？</p>
+<p>其實以上雖然看似三點，但其實背後都是相同的道理：共用的準則，就是要深入地好好想看看，你準備抽出來的程式碼片段，他是在「意圖」上是相同的，還是只是「實作」上相同？若是「意圖」上相同，抽取出來共用就沒有問題，但若只是「實作」上相同，而意圖上不同的話，這樣最好是不要抽成共用，或是拆解成「意圖」與「實作」相符的
+Utility Class 比較好。</p>
+<p>比如以前面 SQL Query 的例子來說，若抽成共用是以<strong>產生 Query 的 Utility</strong> 的角度來下手，意圖從「共用
+<code>getAdultsQuery</code> 和 <code>getComicBooksQuery</code> 的實作」轉變成「共用產生 SQL Query
+的工具」，這樣會抽取的共用程式碼目的及擺放的位置都會不同（很自然地就不會把他放在一個 XXXXBase 的父類別裡），比如可以產生一個 fluent
+query builder library 來讓程式碼易用：</p>
+<pre><code>class class SQLQueryBuilder {
+  // impl.
+}
+
+public String getAdultsQuery() {
+  return qb.select(&quot;name&quot;, &quot;age&quot;)
+    .from(&quot;users&quot;)
+    .where(&quot;age&quot;).ge(18)
+    .limit(10)
+    .build();
+}
+
+public String getComicBooksQuery() {
+  return qb.select(&quot;*&quot;)
+    .from(&quot;books&quot;)
+    .where(&quot;type&quot;).eq(&quot;comics&quot;)
+    .limit(10)
+    .build();
+}
+</code></pre>
+<p>以上幾種常見的共用誤區你有沒有踩到呢？下次打算要重構抽取共用程式碼時，可以停下來多想想，避免寫出之後很難改動的共用程式！</p>
+<h3 id="分享">分享:</h3>
+<ul>
+<li><a href="https://yehzu.net/2022/04/30/%e7%a8%8b%e5%bc%8f%e7%a2%bc%e5%85%b1%e7%94%a8/?share=facebook"> 按一下以分享至 Facebook(在新視窗中開啟) Facebook </a></li>
+<li><a href="https://yehzu.net/2022/04/30/%e7%a8%8b%e5%bc%8f%e7%a2%bc%e5%85%b1%e7%94%a8/?share=linkedin"> 分享到 LinkedIn(在新視窗中開啟) LinkedIn </a></li>
+<li><a href="https://yehzu.net/2022/04/30/%e7%a8%8b%e5%bc%8f%e7%a2%bc%e5%85%b1%e7%94%a8/?share=twitter"> 按一下即可分享至 X(在新視窗中開啟) X </a></li>
+<li></li>
+</ul>
+<p>喜歡 正在載入&hellip;</p>
+<h3 id="相關"><em>相關</em></h3>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

@@ -1,6 +1,95 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&display=swap" rel="stylesheet">
+
 <style>
+    :root {
+        --theme: light;
+        --primary: #2A2424;
+        --secondary: #666;
+        --tertiary: #fef9f6;
+        --content: #2A2424;
+        --hljs-bg: #f8f8f8;
+        --code-bg: rgba(42, 36, 36, 0.05);
+        --border: rgba(42, 36, 36, 0.08);
+    }
+
     body {
         background-color: #fef9f6 !important;
-        font-family: Georgia, 'Times New Roman', Times, serif !important;
+        font-family: 'Noto Serif TC', Georgia, 'Times New Roman', Times, serif !important;
+        color: #2A2424 !important;
+        line-height: 1.7;
+    }
+
+    /* 標題樣式 */
+    h1, h2, h3, h4, h5, h6 {
+        color: #2A2424 !important;
+        font-family: 'Noto Serif TC', Georgia, serif !important;
+    }
+
+    /* 導航欄樣式 */
+    .header nav {
+        background: transparent !important;
+    }
+
+    /* 內容區域 */
+    .main {
+        background: #fef9f6 !important;
+    }
+
+    /* 文章列表 */
+    .post-entry {
+        background: rgba(255, 255, 255, 0.3) !important;
+        border: 1px solid rgba(42, 36, 36, 0.08) !important;
+        border-radius: 8px !important;
+        margin-bottom: 2rem !important;
+        padding: 1.5rem !important;
+    }
+
+    .post-entry:hover {
+        background: rgba(255, 255, 255, 0.5) !important;
+        border-color: rgba(42, 36, 36, 0.12) !important;
+    }
+
+    /* 文章標題 */
+    .entry-header h2 {
+        font-size: 1.5rem !important;
+        font-weight: 500 !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    /* 連結樣式 */
+    a {
+        color: #2A2424 !important;
+        text-decoration: none !important;
+    }
+
+    a:hover {
+        color: #666 !important;
+        text-decoration: underline !important;
+    }
+
+    /* 簡化頁面元素 */
+    .footer {
+        background: #fef9f6 !important;
+        border-top: 1px solid rgba(42, 36, 36, 0.08) !important;
+        color: #666 !important;
+    }
+
+    /* 移除不必要的陰影和邊框 */
+    .theme-toggle, .lang-switch, .search-button {
+        background: transparent !important;
+        border: none !important;
+        color: #2A2424 !important;
+    }
+
+    /* 社交圖標樣式 */
+    .social-icons a {
+        background: rgba(42, 36, 36, 0.05) !important;
+        color: #2A2424 !important;
+    }
+
+    .social-icons a:hover {
+        background: rgba(42, 36, 36, 0.1) !important;
     }
 </style>

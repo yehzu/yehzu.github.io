@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>資料科學團隊的敏捷管理 | 小葉隨筆</title>
+<meta name="keywords" content="agile, data science, 資料科學, kanban, scrum, 敏捷">
+<meta name="description" content="去年時，從一個純 Backend 轉調到資料科學團隊時，還滿不習慣的。最主要的差異是，那時的這個團隊，雖然也是跑著 scrum，但每次 demo
+時，ticket 的完成率常常只有不到 50%，有些票更是很容易橫跨三、四個 sprint 也關不掉。這對於剛從一個 scrum
+跑得非常成熟的團隊轉出來的我，非常地不適應。老實說，當時的我沒有想太多，只覺得這個 scrum 跑得不是很成功，但後來回想，不適應的原因大概有幾點：">
+<meta name="author" content="yehzu">
+<link rel="canonical" href="http://localhost:1313/posts/2022-03-10-9/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.f608f704390d768ebdd94b11f04a9fb19a7a673792c46355607351de2be783ff.css" integrity="sha256-9gj3BDkNdo692UsR8EqfsZp6ZzeSxGNVYHNR3ivng/8=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/2022-03-10-9/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --theme: light;
+        --primary: #2A2424;
+        --secondary: #666;
+        --tertiary: #fef9f6;
+        --content: #2A2424;
+        --hljs-bg: #f8f8f8;
+        --code-bg: rgba(42, 36, 36, 0.05);
+        --border: rgba(42, 36, 36, 0.08);
+    }
+
+    body {
+        background-color: #fef9f6 !important;
+        font-family: 'Noto Serif TC', Georgia, 'Times New Roman', Times, serif !important;
+        color: #2A2424 !important;
+        line-height: 1.7;
+    }
+
+     
+    h1, h2, h3, h4, h5, h6 {
+        color: #2A2424 !important;
+        font-family: 'Noto Serif TC', Georgia, serif !important;
+    }
+
+     
+    .header nav {
+        background: transparent !important;
+    }
+
+     
+    .main {
+        background: #fef9f6 !important;
+    }
+
+     
+    .post-entry {
+        background: rgba(255, 255, 255, 0.3) !important;
+        border: 1px solid rgba(42, 36, 36, 0.08) !important;
+        border-radius: 8px !important;
+        margin-bottom: 2rem !important;
+        padding: 1.5rem !important;
+    }
+
+    .post-entry:hover {
+        background: rgba(255, 255, 255, 0.5) !important;
+        border-color: rgba(42, 36, 36, 0.12) !important;
+    }
+
+     
+    .entry-header h2 {
+        font-size: 1.5rem !important;
+        font-weight: 500 !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+     
+    a {
+        color: #2A2424 !important;
+        text-decoration: none !important;
+    }
+
+    a:hover {
+        color: #666 !important;
+        text-decoration: underline !important;
+    }
+
+     
+    .footer {
+        background: #fef9f6 !important;
+        border-top: 1px solid rgba(42, 36, 36, 0.08) !important;
+        color: #666 !important;
+    }
+
+     
+    .theme-toggle, .lang-switch, .search-button {
+        background: transparent !important;
+        border: none !important;
+        color: #2A2424 !important;
+    }
+
+     
+    .social-icons a {
+        background: rgba(42, 36, 36, 0.05) !important;
+        color: #2A2424 !important;
+    }
+
+    .social-icons a:hover {
+        background: rgba(42, 36, 36, 0.1) !important;
+    }
+</style>
+</head>
+
+<body class="" id="top">
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="小葉隨筆 (Alt + H)">小葉隨筆</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/posts/" title="文章">
+                    <span>文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="標籤">
+                    <span>標籤</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+    <header class="post-header">
+        
+        <h1 class="post-title entry-hint-parent">
+            資料科學團隊的敏捷管理
+        </h1>
+    </header> 
+    <div class="post-content"><p>去年時，從一個純 Backend 轉調到資料科學團隊時，還滿不習慣的。最主要的差異是，那時的這個團隊，雖然也是跑著 scrum，但每次 demo
+時，ticket 的完成率常常只有不到 50%，有些票更是很容易橫跨三、四個 sprint 也關不掉。這對於剛從一個 scrum
+跑得非常成熟的團隊轉出來的我，非常地不適應。老實說，當時的我沒有想太多，只覺得這個 scrum 跑得不是很成功，但後來回想，不適應的原因大概有幾點：</p>
+<ol>
+<li>無法估量每個成員的產出</li>
+<li>無法比較有效、或是具體的在 retrospective meeting 中去討論如何改善</li>
+<li>團隊士氣低落、缺乏動能</li>
+</ol>
+<p>於是，身為 Team Leader，開始想要著手改善這個部分。</p>
+<p>天真如我，一開始覺得是這樣的問題，就是源自於 ticket
+的完成條件沒有被好好的定義，只要完成條件定義好，一張票的估點及完成，應該都是相差不遠才對。豈知這個想法，雖然沒錯，但就錯在資料科學有一些任務，是沒辦法簡單的在一開始就定義好完成條件的。又或者說，定義的方式，並不是那麼直覺單純。</p>
+<h2 id="資料科學任務的性質">資料科學任務的性質<a hidden class="anchor" aria-hidden="true" href="#資料科學任務的性質">#</a></h2>
+<p>一般的 Backend 任務，不論是系統面或是實作面，大家對於目標的理解及完成比較不會有太大的變動，若有比較大的變動，也比較容易在 Daily
+會議中針對中途發生的問題有所調整。</p>
+<p>回到這些在資料科學中，無法如期收斂的任務，其大多數都是所謂「研究性」任務，比如說：研究如何使 CTR 增加
+10%、如何如用使用者點擊資料，等等。這種類型的任務，最常見的狀況是在進行的過程中，發現新的可能性、可以再去研究的目標、或是發現原定的目標不符合預期，而導致整個任務的目標一直被調整，而讓完成時程越拖越長。而其變動的頻率及範圍，也比一般
+Backend 任務要頻繁且大，因此若規畫到一般 scrum 的 Daily 去處理，很可能一變動下，許多在 Planning 承諾的任務，都被迫要移出該
+sprint 中，反而排擠掉其他可能做到中途的任務而讓許多 demo 無法呈現，看似 sprint 的完成度提升，實則沒有什麼任務完成。</p>
+<h2 id="目前的解決方式">目前的解決方式<a hidden class="anchor" aria-hidden="true" href="#目前的解決方式">#</a></h2>
+<p>仔細探究，資料科學任務很適合使用看版（kanban）方式來操作。一旦有新的想法、可能性，就可以先把這個發想開新的一個
+ticket，並回到原本該做的實驗上。若是原實驗已不合適，也可將現有的 ticket 關掉並拿下一個 ticket
+來做。如此，成員的產出能夠估算，也不會讓人覺得 ticket 一直停在原地不會往前。</p>
+<p>結合 scrum 在一般軟體開發上能持續以 MVP 產出為目標的優點，及 kanban
+讓產線工作能被記錄且移動的特性，我們將資料科學類型的任務與一般較易估算點數的任務分開，跑 scrum / kanban 的混合模式。在 scurm
+sprint 的 planning 時，我們就會決定要將 velocity 的一部分點數用於跑 kanban 上，其餘的點再分配給 scrum。</p>
+<h2 id="總結">總結<a hidden class="anchor" aria-hidden="true" href="#總結">#</a></h2>
+<p>使用 scrum 方式，對於結果未知的研究性任務來說，並不合適。我們使用 kanban + scrum
+來分別記錄及追縱一般及研究性任務，提升成員的士氣，也讓產出可以比較忠實地量化。</p>
+<p>之後再來撰文來說明，研究性的任務應該要如何設定驗收標準，才比較容易收斂，提供進一步任務更具體且有用的基石。</p>
+<h3 id="分享">分享:<a hidden class="anchor" aria-hidden="true" href="#分享">#</a></h3>
+<ul>
+<li><a href="https://yehzu.net/2022/03/10/%e8%b3%87%e6%96%99%e7%a7%91%e5%ad%b8%e5%9c%98%e9%9a%8a%e7%9a%84%e6%95%8f%e6%8d%b7%e7%ae%a1%e7%90%86/?share=facebook"> 按一下以分享至 Facebook(在新視窗中開啟) Facebook </a></li>
+<li><a href="https://yehzu.net/2022/03/10/%e8%b3%87%e6%96%99%e7%a7%91%e5%ad%b8%e5%9c%98%e9%9a%8a%e7%9a%84%e6%95%8f%e6%8d%b7%e7%ae%a1%e7%90%86/?share=linkedin"> 分享到 LinkedIn(在新視窗中開啟) LinkedIn </a></li>
+<li><a href="https://yehzu.net/2022/03/10/%e8%b3%87%e6%96%99%e7%a7%91%e5%ad%b8%e5%9c%98%e9%9a%8a%e7%9a%84%e6%95%8f%e6%8d%b7%e7%ae%a1%e7%90%86/?share=twitter"> 按一下即可分享至 X(在新視窗中開啟) X </a></li>
+<li></li>
+</ul>
+<p>喜歡 正在載入&hellip;</p>
+<h3 id="相關"><em>相關</em><a hidden class="anchor" aria-hidden="true" href="#相關">#</a></h3>
+
+
+    </div>
+
+    <footer class="post-footer">
+        <ul class="post-tags">
+            <li><a href="http://localhost:1313/tags/agile/">Agile</a></li>
+            <li><a href="http://localhost:1313/tags/data-science/">Data Science</a></li>
+            <li><a href="http://localhost:1313/tags/data-science-zh/"></a></li>
+            <li><a href="http://localhost:1313/tags/kanban/">Kanban</a></li>
+            <li><a href="http://localhost:1313/tags/scrum/">Scrum</a></li>
+            <li><a href="http://localhost:1313/tags/agile-zh/"></a></li>
+        </ul>
+    </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="http://localhost:1313/">小葉隨筆</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+</body>
+
+</html>

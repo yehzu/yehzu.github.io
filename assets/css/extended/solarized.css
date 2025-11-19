@@ -1,0 +1,232 @@
+/* Solarized Light Variables */
+:root {
+    --solar-base03: #002b36;
+    --solar-base02: #073642;
+    --solar-base01: #586e75;
+    --solar-base00: #657b83;
+    --solar-base0: #839496;
+    --solar-base1: #93a1a1;
+    --solar-base2: #eee8d5;
+    --solar-base3: #fdf6e3;
+    --solar-yellow: #b58900;
+    --solar-orange: #cb4b16;
+    --solar-red: #dc322f;
+    --solar-magenta: #d33682;
+    --solar-violet: #6c71c4;
+    --solar-blue: #268bd2;
+    --solar-cyan: #2aa198;
+    --solar-green: #859900;
+
+    /* PaperMod Overrides */
+    --theme: #fdf6e3 !important;
+    /* Base3 - Cream Background */
+    --entry: #fdf6e3 !important;
+    --primary: #586e75 !important;
+    /* Base01 - Darker Body Text */
+    --secondary: #93a1a1 !important;
+    /* Base1 */
+    --tertiary: #eee8d5 !important;
+    /* Base2 */
+    --content: #586e75 !important;
+    /* Base01 - Darker Body Text */
+    --hljs-bg: #eee8d5 !important;
+    --code-block-bg: #eee8d5 !important;
+    --border: #eee8d5 !important;
+
+    /* Typography */
+    --font-family: "Merriweather", "Georgia", "Noto Serif TC", "Songti TC", serif;
+    --font-size: 18px;
+    --line-height: 1.8;
+}
+
+/* Force Light Mode Colors even if system is dark */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --theme: #fdf6e3 !important;
+        --entry: #fdf6e3 !important;
+        --primary: #586e75 !important;
+        --secondary: #93a1a1 !important;
+        --tertiary: #eee8d5 !important;
+        --content: #586e75 !important;
+        --hljs-bg: #eee8d5 !important;
+        --code-block-bg: #eee8d5 !important;
+        --border: #eee8d5 !important;
+    }
+}
+
+html,
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+    background-color: #fdf6e3 !important;
+    /* Explicit Cream */
+    color: #073642 !important;
+    /* Base02 - Darker Headings Color for Body Text too */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #073642 !important;
+    /* Base02 - Darker Headings */
+    font-weight: 700;
+}
+
+a {
+    color: #268bd2;
+    /* Blue */
+    text-decoration: none;
+}
+
+a:hover {
+    color: #cb4b16;
+    /* Orange */
+    text-decoration: underline;
+}
+
+/* Minimalist Social Icons - No Box */
+.social-icons a,
+.social-icons a:hover,
+.social-icons a:visited,
+.social-icons a:focus {
+    background: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    /* Remove padding to avoid box look */
+    margin-right: 15px !important;
+    /* Add spacing since padding is gone */
+    box-shadow: none !important;
+    opacity: 1 !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-icons a svg {
+    fill: #586e75 !important;
+    /* Base01 */
+    transition: fill 0.3s;
+    width: 24px;
+    height: 24px;
+    stroke: none !important;
+    /* Ensure no stroke if fill is used */
+}
+
+.social-icons a:hover svg {
+    fill: #268bd2 !important;
+    /* Blue on hover */
+}
+
+/* Hide Theme Toggle if it exists */
+#theme-toggle {
+    display: none !important;
+}
+
+/* Override PaperMod's default line-clamp */
+.entry-content {
+    -webkit-line-clamp: unset !important;
+    overflow: visible !important;
+    display: block !important;
+}
+
+/* Homepage 2-Column Layout */
+.post-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.post-entry-custom {
+    border-bottom: 1px solid var(--solar-base2);
+    padding-bottom: 40px;
+}
+
+.post-entry-grid {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    /* Swapped: Left is smaller (Meta), Right is content */
+    gap: 40px;
+    align-items: start;
+}
+
+.post-content-column {
+    order: 2;
+    /* Right */
+}
+
+.post-meta-column {
+    order: 1;
+    /* Left */
+    text-align: left !important;
+    /* Align meta to left to avoid jagged edges */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* Ensure flex items align left */
+}
+
+.post-meta-column .entry-header,
+.post-meta-column .entry-footer {
+    text-align: left !important;
+    width: 100%;
+}
+
+.post-meta-column .entry-header h2 {
+    margin-top: 0;
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-align: left !important;
+}
+
+.post-meta-column .entry-footer {
+    color: var(--solar-base1);
+    font-size: 14px;
+}
+
+/* Force content color to match title */
+.entry-content {
+    color: #073642 !important;
+    /* Match title color */
+}
+
+/* Single Post Layout - Narrow Column */
+.post-single {
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.post-single .post-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.post-single .post-content {
+    font-family: var(--font-family);
+    font-size: 18px;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .post-entry-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .post-content-column {
+        order: 2;
+    }
+
+    .post-meta-column {
+        order: 1;
+        text-align: left;
+        margin-bottom: 20px;
+    }
+}

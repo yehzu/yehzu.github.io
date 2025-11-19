@@ -4,8 +4,707 @@
     <title>小葉隨筆</title>
     <link>http://localhost:1313/</link>
     <description>Recent content on 小葉隨筆</description>
-    <generator>Hugo -- 0.148.0</generator>
-    <language>en-us</language>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>zh-tw</language>
+    <lastBuildDate>Thu, 16 Nov 2023 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>為什麼 Heptabase 適合我</title>
+      <link>http://localhost:1313/posts/2023-11-16-7/</link>
+      <pubDate>Thu, 16 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2023-11-16-7/</guid>
+      <description>&lt;p&gt;今天來談談使用電子筆記的心路歷程。&lt;/p&gt;
+&lt;p&gt;求學的程中，我一直是那種不太會做那種「精美」的筆記的人。還記得當年剛升國中的時候，國文老師教我們該如何做筆記：「課堂上做筆記只要記錄下自己不懂的部分就好了」。也因此一直以來，我都是直接在課本上做註記，不會另外寫成那種條理分明的筆記（也不知道別人那種筆記是怎麼弄出來的…）。大學必修課時，要嘛是把老師的板書抄下來，一個個引理、一個個定理，能夠跟上老師擦黑板的速度就阿彌陀佛了…&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>今天來談談使用電子筆記的心路歷程。</p>
+<p>求學的程中，我一直是那種不太會做那種「精美」的筆記的人。還記得當年剛升國中的時候，國文老師教我們該如何做筆記：「課堂上做筆記只要記錄下自己不懂的部分就好了」。也因此一直以來，我都是直接在課本上做註記，不會另外寫成那種條理分明的筆記（也不知道別人那種筆記是怎麼弄出來的…）。大學必修課時，要嘛是把老師的板書抄下來，一個個引理、一個個定理，能夠跟上老師擦黑板的速度就阿彌陀佛了…</p>
+<p>剛出社會時，還是抱持著 vim + 純文字檔無敵、比較帥的心態在做事，覺得這樣才是一個「硬核 (hardcore)」的工程師。於是，一開始我的筆記是使用
+vim 以 markdown 來寫，放在本機電腦中一個個「精心設計好」的資料夾下，再利用 cloud drive
+來同步在不同電腦上。但很快的就有問題發現了：我的筆記常常是有頭無尾，很片段的東西。但真的要找相關內容時，我卻不知道他們被我放到哪裡…</p>
+<p>後來 Notion 橫空出世，在那個筆記軟體以 Evernote 為大宗的年代，Notion 以可以靈活拖移的各種 block，包括可以直接嵌入
+google document，還有內建的 db、 table view、kanban view 等等的功能，實在太吸引人了！所以即使當時還是免費仔只有
+2000 個 block
+的限制時，我就開始自己的記錄慢慢搬上去。但問題依然沒有解決，我找不到過往寫過的東西，反而一樣的東西散落好幾個地方…而且產生了新的問題：我花了更多的時間使用他炫目的各種功能、排版、選
+emoji icon 等等，反而花在正事的時間下降了…</p>
+<p>兩年前開始使用<a href="https://yehzu.net/2022/02/12/%e5%ad%90%e5%bd%88%e7%ad%86%e8%a8%98%e4%bd%bf%e7%94%a8%e5%bf%83%e5%be%97/#more-59">子彈筆記</a>，這種筆記法成功解決了一件事：就算我把同樣一件事寫在不同地方，也能透過頁碼及索引找到，不用擔心寫在不同地方的問題。由於我的工作重度依賴電腦，紙本對我來說，沒辦法成為單一可信賴的來源
+(The source of truth)，所以我後來利用 Notion
+來做電子版的子彈筆記。但用了一陣子發現，我會將事情記到子彈筆記的日誌當中，但不會回頭去整理這些資訊。正所謂沒翻過第二次的筆記叫做塗鴉，加上數位筆記沒有紙本筆記本般的位置資訊，很多曾經記錄過的東西，對我來說一點記憶點也沒有…</p>
+<hr>
+<p>回顧這段過程，也算是一種滿深刻的反思。我發覺：</p>
+<ol>
+<li>我的思考模式是網狀的，常被人問到一個問題時，瞬間在腦中抓取相關內容，再即時地整理成有條理的內容。</li>
+<li>我是視覺記憶的人，一般的數位筆記缺乏明確的位置資訊，讓我的記憶方式減弱不少。</li>
+</ol>
+<p>而在我的前半生，能過得如此順利，就是因為我同樣有很好的記憶力，可以在腦中操作這些記憶點來思考。但隨著年紀漸長，遇到的事情複雜度越來越高，能思考的時間也越來越少，迎來了我的思考方式的瓶頸：需仰賴強大的記憶能力。若主題太大，會變得無法深入思考。我需要有方式可以幫助我
+scale out。</p>
+<p>這也是為什麼當時一接觸到 Heptabase，就深深的被他吸引：</p>
+<ol>
+<li>Heptabase 的卡片及白板，讓我想到不同的想法時，不用管是要寫在哪一行、要怎麼整理，而是可以先新開一張卡片丟在原本的卡片旁邊</li>
+<li>白板的好處：打破每個主題之間的距離，不會被以一行一行的排版觀念限制住。概念和概念之間打破原本的一維、而可以有二維的遠、近關係</li>
+<li>使用白板，把概念攤在桌面上視覺化，更容易討論及思考事情。</li>
+<li>Heptabase 不是利用文件方式做階層管理，而是利用白板。很輕易可以相關的白板或卡片引用在一起，確保一定是相關的內容。</li>
+</ol>
+<p>目前使用 Heptabase
+的整體經驗來說，和我腦中思考的運作是非常貼合的！同時，子彈筆記的概念使用起來更為方便！利用內建的日誌功能，每天晚上可以很方便的將一天記錄下來的事情及日誌的內容整理好後，方便的轉換成卡片，放入已經有的專案或是主題白板中。同時可以檢視新的卡片是否和既有的概念相同，重新做調整。如何是已有的概念，就可以直接引用及更新舊卡片。後來看到<a href="https://readingoutpost.com/heptabase-alan/">創辦人
+Alan 和瓦基的對談</a>，深深地被 Alan
+的願景給打動：想打造的不是筆記軟體，而是能幫助人們做深度的思考，解放大腦潛力的軟體。這也是為什麼 Heptabase
+的核心功能是白板，而不是筆記、文字的原因。</p>
+<p>目前使用 Heptabase
+已經兩個多月了，只覺得相見恨晚！位置資訊對我來說真的是非常重要，目前白板的位置都是自己放的（而不是透過排序過後的列表），找東西真的順利很多！就像堆砌樂高般，在每一小塊想法下各自發展，最後再連起成為完整的想法，過程中的壓力減少很多。希望透過這樣的過程，能更容易將心中的想法化為比較完整的文字，分享給大家！如果因為我的分享而想嘗試的
+Heptabase ，歡迎透過我的 [referral link](<a href="https://join.heptabase.com?invite-acc-">https://join.heptabase.com?invite-acc-</a>
+id=20e33405-8505-4972-a475-e0eedc0680b6) 加入，給我一點小小的贊助 🙂</p>
+<h3 id="分享">分享:</h3>
+<ul>
+<li><a href="https://yehzu.net/2023/11/16/%e7%82%ba%e4%bb%80%e9%ba%bc-heptabase-%e9%81%a9%e5%90%88%e6%88%91/?share=facebook"> 按一下以分享至 Facebook(在新視窗中開啟) Facebook </a></li>
+<li><a href="https://yehzu.net/2023/11/16/%e7%82%ba%e4%bb%80%e9%ba%bc-heptabase-%e9%81%a9%e5%90%88%e6%88%91/?share=linkedin"> 分享到 LinkedIn(在新視窗中開啟) LinkedIn </a></li>
+<li><a href="https://yehzu.net/2023/11/16/%e7%82%ba%e4%bb%80%e9%ba%bc-heptabase-%e9%81%a9%e5%90%88%e6%88%91/?share=twitter"> 按一下即可分享至 X(在新視窗中開啟) X </a></li>
+<li></li>
+</ul>
+<p>喜歡 正在載入&hellip;</p>
+<h3 id="相關"><em>相關</em></h3>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>蓋洛普天賦</title>
+      <link>http://localhost:1313/posts/2023-10-09-5/</link>
+      <pubDate>Mon, 09 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2023-10-09-5/</guid>
+      <description>&lt;p&gt;這次在整理公司坐位的時候發現當年剛進來 Yahoo 的時候，公司每人發了一本《&lt;a href=&#34;https://www.eslite.com/product/1001247312485837&#34;&gt;發現我的天才:
+打開34個天賦的禮物&lt;/a&gt;》
+，那時候我就丟在公司抽屜裡放到現在…前陣子把這本書看完覺得收獲滿多的，跟大家分享~&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>這次在整理公司坐位的時候發現當年剛進來 Yahoo 的時候，公司每人發了一本《<a href="https://www.eslite.com/product/1001247312485837">發現我的天才:
+打開34個天賦的禮物</a>》
+，那時候我就丟在公司抽屜裡放到現在…前陣子把這本書看完覺得收獲滿多的，跟大家分享~</p>
+<p>這本書的作者是 Marcus Buckingham 和 Donald O. Clifton，後者後來成立了蓋洛普 Gallup，兩個人都在 Gallup
+工作，他們的主張是「優勢心理學」，也是這本書要講的主要內容~</p>
+<p>書中主要是先定義什麼是「<strong>能力</strong> 」：</p>
+<ol>
+<li>能力，是指「長期」且「穩定」的表現，也是自己的本質。主要由三個面向構成：a. 天賦 b. 知識 c. 技巧
+<ul>
+<li>
+<p>天賦，是指能<strong>重複展現</strong> 、且<strong>帶來效益</strong> 的特質。<br>
+他是大腦神經連結的結果，因此成人後，改變天賦是事倍功半的事。<br>
+效益很重要，就算一般被認為「負面」的特質，能帶來效益就是天賦。比如說「頑固」特質，通常在面對高壓下依然能堅持。<br>
+<strong>發現天賦的線索：渴望、快速學習、及滿意度（或是成就感）</strong></p>
+</li>
+<li>
+<p>知識，包含兩種：內容與經驗。內容可以透過書本、文字、影音等等學習，而經驗則是透過實際操作學習而來。</p>
+</li>
+<li>
+<p>技巧，是神經連結的末端。練得多，決定了<strong>你能不能做這件事</strong> 。但能做得多好、多久，取決於天賦。</p>
+</li>
+</ul>
+</li>
+<li>三個面向都具備，把能力發揮得淋漓盡致，才能成為卓越。卓越不必是全才，將精力放在讓能力發揮上，而非花大把的精力去補足劣勢。</li>
+<li>認清自己的能力，利用自己的能力和本質建立自信心，而非建立在自己的職業上。同樣的能力和本質，可以做很多不同的職業，會讓自己的職涯會有更廣闊的選擇。</li>
+</ol>
+<p>而為什麼大家常常花了大把的精力，去想改善自己的劣勢，而非發展自己的優勢呢？作者認為：</p>
+<ul>
+<li>劣勢不等於弱點，只是不擅長而已。劣勢變為弱點的關鍵，在於這個劣勢會阻礙你成為卓越時。</li>
+<li>因為害怕自己不夠好，所以想要改掉自己的弱點。</li>
+<li>無法接受自己有不擅長或弱點存在。</li>
+<li>常見的兩個盲點：1. 相信每個人都能透過學習學會任何事 2. 相信每個人最佳發展的領域就是他的弱點，而非他的優勢能力。</li>
+</ul>
+<p>因此，作者主張：</p>
+<ol>
+<li>我們應該要認清自己的天賦、優勢所在，並花最多的精力去磨亮他們，達到卓越。</li>
+<li>自信心建力在自己的天賦、本質上，而非職業上。</li>
+<li>弱點依然有很大的破壞力，我們要能引導這些比較不擅長的部分，管控他們造成的影響。基本上有五種對策
+<ul>
+<li>稍加改進弱點</li>
+<li>建立提醒或支援自己的方式</li>
+<li>找互補的伙伴一起完成任務</li>
+<li>利用自己的優勢來 cover 自己的弱點</li>
+<li>放棄弱點</li>
+</ul>
+</li>
+<li>因為每個人的天賦都不一樣，因此每個人在面對同一件事的想法也是不同的。不要把自己的天賦看得太理所當然，覺得別人也應該跟我一樣</li>
+</ol>
+<p>整體的思想我滿認同的，花太多的注意力在弱點上，只是讓自己變得平庸。但管控好弱點，把精力放在擅長之處，才能工作得開心且得心應手，也才能發揮出突出的表現。</p>
+<p>CliftonStrengths 是作者發展出來的測驗，和 MBTI 不一樣的點主要是測出來的含意不太一樣。 MBTI
+主要是測目前的你的偏好是什麼，給出來的結果是你的性格表現。CliftonStrengths
+則是建立在天賦的理論上，因為天賦成年後就不太會變動了，所以多做幾次測驗也不會有太大的落差，他們建議只要做一次就好。這個測驗歸納出了 <a href="https://betweengos.com/34-strengths-finder/">34
+種天賦</a> ([source
+2](<a href="https://lynnihlin.com/portfolio-">https://lynnihlin.com/portfolio-</a>
+posts/learner/))，每個人都有不同的組合，並建議大家可以多思考要如何強化前五、甚至是十項天賦，並管理好自己不擅長的後面天賦。前五種的天賦組合不考慮順序的話，就有
+C534 = 278,256 種，可說是人人幾乎都是不同的。</p>
+<p>這本書有提供一次免費的前五項優勢測驗，總共有 177
+題，測驗結果的前五項天賦順序沒有太大的差異，都是自己比較擅長的區塊。完整的報告要再花錢解鎖…於是就給他課金課下去解鎖了完整的報告XD”
+我覺得滿好的點是了解自己喜歡、擅長做的事情，並把這樣的能力用在工作上，同時也了解自己比較不擅長的部分，可以不用太揪結在這個方面做到最好。</p>
+<p>我得到的結果，的確滿貼近我喜愛做且擅長的事，也跟大家分享，歡迎大家分享自己的優勢 🙂</p>
+<ol>
+<li>
+<p>Learner (學習)<br>
+學習天賦突出的人具有不斷學習的動力，並藉此不停進步的慾望。最使他們興奮的是過程，而不是內容或結果。</p>
+</li>
+<li>
+<p>Intellection (思維)<br>
+思維天賦突出的人喜歡思考，在自己身上尋求答案。他們時常自省並且喜歡有內容的深度對談。</p>
+</li>
+<li>
+<p>Restorative (排難)<br>
+排難天賦突出的人能夠快速找出解決處理難題。他們善於辨識錯誤和解決問題。</p>
+</li>
+<li>
+<p>Ideation (理念)<br>
+理念天賦突出的人喜愛於腦子中建設出新構想的樂趣。他們可以在表面截然不同的現象中尋找關聯。</p>
+</li>
+<li>
+<p>Connectedness (關聯)<br>
+關聯天賦突出的人相信萬物皆有關聯。他們認為每個獨立事件發生都有其意義，而非純屬巧合。</p>
+</li>
+<li>
+<p>Responsibility (責任)<br>
+責任天賦突出的人對自己做出的承諾，或他人所委託的事項，總能完成任務並負責到底。對於忠誠和誠信，他們尤其覺得有義務將其完全落實。</p>
+</li>
+<li>
+<p>Consistency (公平)<br>
+公平天賦突出的人注重平等對待所有人。他們嚮往生活在規範清楚且平等適用於每個人的公平環境。</p>
+</li>
+<li>
+<p>Adaptability (適應)<br>
+適應天賦突出的人傾向順其自然。他們活在當下、隨遇而安，比起思考未來，更傾向專注眼前。</p>
+</li>
+<li>
+<p>Self-Assurance (自信)<br>
+自信天賦突出的人深知自己有能力冒風險，有能力對自身生活方向負責。他們內心有著一個穩住航向的羅盤，總能悟出該做什麼。</p>
+</li>
+<li>
+<p>Developer (伯樂)<br>
+伯樂天賦突出的人能發現並且開發別人的潛能。他們能從中辨認明確的進步，從其進步獲取成就感。</p>
+</li>
+</ol>
+<h3 id="分享">分享:</h3>
+<ul>
+<li><a href="https://yehzu.net/2023/10/09/%e8%93%8b%e6%b4%9b%e6%99%ae%e5%a4%a9%e8%b3%a6/?share=facebook"> 按一下以分享至 Facebook(在新視窗中開啟) Facebook </a></li>
+<li><a href="https://yehzu.net/2023/10/09/%e8%93%8b%e6%b4%9b%e6%99%ae%e5%a4%a9%e8%b3%a6/?share=linkedin"> 分享到 LinkedIn(在新視窗中開啟) LinkedIn </a></li>
+<li><a href="https://yehzu.net/2023/10/09/%e8%93%8b%e6%b4%9b%e6%99%ae%e5%a4%a9%e8%b3%a6/?share=twitter"> 按一下即可分享至 X(在新視窗中開啟) X </a></li>
+<li></li>
+</ul>
+<p>喜歡 正在載入&hellip;</p>
+<h3 id="相關"><em>相關</em></h3>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>溫水煮青蛙</title>
+      <link>http://localhost:1313/posts/2023-02-05-1/</link>
+      <pubDate>Sun, 05 Feb 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2023-02-05-1/</guid>
+      <description>&lt;p&gt;如果直接把青蛙丟到熱水裡，青蛙會直接跳出來；但如果把青蛙放在冷水裡慢慢加熱，它會不知不覺的被煮熟…&lt;br&gt;
+先不論後來有人說在後者的場景裡其實青蛙也還是會跳出來，這個溫水煮青蛙的比喻，常常拿來形容人沒有感知到危機的徵兆，而一點一點的步入死亡。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>如果直接把青蛙丟到熱水裡，青蛙會直接跳出來；但如果把青蛙放在冷水裡慢慢加熱，它會不知不覺的被煮熟…<br>
+先不論後來有人說在後者的場景裡其實青蛙也還是會跳出來，這個溫水煮青蛙的比喻，常常拿來形容人沒有感知到危機的徵兆，而一點一點的步入死亡。</p>
+<p>但最近對於這句話卻有另一番想法。</p>
+<p>常常可以看到提倡要勇於跳出舒適圈學習，以保持自身的競爭力這樣子的說法。不能說這樣的說法有什麼問題，但每個人跳出舒適圈的存活率是不同的，有的時候太激烈的方式反而是有害的：直接被挫折感壓死，前進不了也沒有退路。以溫水煮青蛙的比喻來看，就是直接把青蛙丟到熱水裡的做法，跳到陌生環境直接水土不服而陣亡。對於大部分的人來說，在舒適圈中有意識地去選擇不舒適的部分學習，用自己的步調慢慢來，比較能適應。</p>
+<h3 id="分享">分享:</h3>
+<ul>
+<li><a href="https://yehzu.net/2023/02/05/%e6%ba%ab%e6%b0%b4%e7%85%ae%e9%9d%92%e8%9b%99/?share=facebook"> 按一下以分享至 Facebook(在新視窗中開啟) Facebook </a></li>
+<li><a href="https://yehzu.net/2023/02/05/%e6%ba%ab%e6%b0%b4%e7%85%ae%e9%9d%92%e8%9b%99/?share=linkedin"> 分享到 LinkedIn(在新視窗中開啟) LinkedIn </a></li>
+<li><a href="https://yehzu.net/2023/02/05/%e6%ba%ab%e6%b0%b4%e7%85%ae%e9%9d%92%e8%9b%99/?share=twitter"> 按一下即可分享至 X(在新視窗中開啟) X </a></li>
+<li></li>
+</ul>
+<p>喜歡 正在載入&hellip;</p>
+<h3 id="相關"><em>相關</em></h3>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>程式碼共用</title>
+      <link>http://localhost:1313/posts/2022-04-30-4/</link>
+      <pubDate>Sat, 30 Apr 2022 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2022-04-30-4/</guid>
+      <description>&lt;p&gt;繼上一篇淺談程式可讀性，我發覺，與其去談怎麼樣變成一個軟體工程大師，倒不如談談怎樣不要寫出雷雷的東西，比較容易也比較不會有什麼大爭議。軟體工程對於大師還是有不同的層次與見解，滿難去定義的，但是日常維護程式的痛，大家的經驗應該都滿類似的。畢竟，遇到好的或是普通的程式通常不會有什麼特別的感覺（除非是真的遇到
+masterpiece 且剛好看得懂），會被記住的都是那些難懂的程式碼。所以這篇就來談談也是很常見的「共用」程式碼議題。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>繼上一篇淺談程式可讀性，我發覺，與其去談怎麼樣變成一個軟體工程大師，倒不如談談怎樣不要寫出雷雷的東西，比較容易也比較不會有什麼大爭議。軟體工程對於大師還是有不同的層次與見解，滿難去定義的，但是日常維護程式的痛，大家的經驗應該都滿類似的。畢竟，遇到好的或是普通的程式通常不會有什麼特別的感覺（除非是真的遇到
+masterpiece 且剛好看得懂），會被記住的都是那些難懂的程式碼。所以這篇就來談談也是很常見的「共用」程式碼議題。</p>
+<p>每個工程師從開始學程式，到進入職場實戰，一定都有聽過程式碼要盡量能夠共用，才不會一樣的事情需要重複做。嚴格來說，這個概念從一開始學習函式時，就已經烙印在每個工程師的腦中了，舉一個簡單的例子：</p>
+<pre><code>public static void main(String[] args) {
+  // 把 fibonacci sequence 的生成寫成函式以避免使用時都要重寫一遍
+  IntStream.range(1, 11)
+    .forEach(n -&gt; {
+      System.out.println(String.format(&quot;fib(%d) = %d &quot;, n, fibSeq(n)));
+    });
+}
+
+public static int fibSeq(int n) throws IllegalArgumentException {
+  if (n &lt; 0) throw new IllegalArgumentException(&quot;n should be greater or equal to 0&quot;);
+  else if (n == 0 || n == 1) return 1;
+  else return fibSeq(n-1) + fibSeq(n-2);
+}
+</code></pre>
+<p>程式碼重複利用，絕對是軟體工程裡非常重要的一件事。它可以大幅增加生產力，以及降低錯誤的發生率，就算中間有
+bug，也很容易在修改一個地方之後，其他有使用到這個函式的地方也一併修好了。而學完函式，進入物件導向的世界後，消除重複程式碼的工具又多了不少種，像是繼承或泛型都是常用的手段，而最易「入手」的就是繼承。由於物件導向是以物件為主，「繼承」如此自然、好聯想、且容易在原有程式下擴充的特性，讓非常多工程師想優先透過繼承的手法來共用程式碼片段。但錯誤地共用程式，往往會造成後續維護的大問題。主要的原因有以下幾個：</p>
+<ol>
+<li>不太像的東西硬要共用</li>
+<li>看到很像的東西就想共用</li>
+<li>以上的情況，再用「繼承」來共用</li>
+</ol>
+<p>以下，我就針對這三點說明及給些例子！</p>
+<h2 id="不太像的東西也硬要共用">不太像的東西也硬要共用</h2>
+<p>真的假的？這是在幹麼？XD</p>
+<p>這的確是實務上常出現的情況哦！有些工程師太想要達成「共用」，就算兩段程式看起來只有 30%
+的相似，也還是要把他們抽出成一個函式。畢竟，只要函式的參數夠多，再怎麼樣不能共用的東西，也能抽成一個函式呀！於是，很可能可以看到這種程式碼（是個很不 ok
+的例子）：</p>
+<pre><code>private String getQuery(String target, String condition, int returnCnt) {
+  // 為了你的程式安全著想，實務上千萬別這樣寫 SQL 去 query DB...這只是範例
+  return String.format(&quot;SELECT * FROM %s WHERE %s LIMIT %d;&quot;, target, condition, returnCnt);
+}
+
+// 使用的時候…
+public String getAdultsQuery() {
+  return getQuery(&quot;users&quot;, &quot;age &gt;= 18&quot;, 10);
+}
+
+public String getComicBooksQuery() {
+  return getQuery(&quot;books&quot;, &quot;type = \&quot;comics\&quot;&quot;, 10);
+}
+</code></pre>
+<p>這樣的共用方式，會導致 <code>getAdultsQuery</code> 和 <code>getComicBooksQuery</code> 兩個東西被 couple 在一起，當今天
+<code>getAdultsQuery</code>
+不需要撈回全部欄位的時候，這個共用函式只有兩條路：一是修改這個函式需要帶的參數，另一個就是沒辦法再共用這個函式。假設選擇了前面修改參數這條路，那麼程式會變成這樣：</p>
+<pre><code>private String getQuery(String columns, String target, String condition, int returnCnt) {
+  return String.format(&quot;SELECT %s FROM %s WHERE %s LIMIT %d;&quot;, columns, target, condition, returnCnt);
+}
+
+// 使用的時候…
+public String getAdultsQuery() {
+  return getQuery(&quot;name, age&quot;, &quot;users&quot;, &quot;age &gt;= 18&quot;, 10);
+}
+
+public String getComicBooksQuery() {
+  return getQuery(&quot;*&quot;, &quot;books&quot;, &quot;type = \&quot;comics\&quot;&quot;, 10);
+}
+</code></pre>
+<p>變成這樣，其實也沒有真的共用什麼東西了，反而讓程式碼變得難以閱讀及維護。針對這一點，當抽出的共用函式的參數太多且彼此間關聯很薄弱的時候，就要有所警覺：是否這兩段程式碼不該共用？</p>
+<h2 id="看到很像的東西就想共用">看到很像的東西就想共用</h2>
+<p>很像的東西，不就可以抽成共用嗎？這可就大錯特錯了。有的時候，就算長得一模一樣，也未必是應該要抽成共用的。能不能共用，要看的是這個行為的「意圖」是否是一樣的，若只是剛好長得一樣而意圖不同，那只要其中一邊稍有調整，這段程式碼立刻就又會分道揚鑣。</p>
+<p>這邊舉個例子，某線上商城的會員制度分為「一般會員」及「VIP 會員」，若今天不同資格的訂定方式有兩種：</p>
+<ol>
+<li>「一般會員」可以享商品九折優惠，滿三千免運費。「VIP 會員」可以享商品九折優惠，滿三千免運費，滿五千整筆訂單再打八五折。</li>
+<li>「一般會員」可以享商品九折優惠，滿三千免運費。「VIP 會員」除了享有「一般會員」的權利之外，還能多享有滿五千整筆訂單再打八五折。</li>
+</ol>
+<p>以上 1 和 2 的對於一般會員和 VIP 會員的條件是一模一樣的，但在 1 的情境之下， VIP 會員不該和一般會員共用前半段優惠的算式，在 2
+的情境下則可以。因為 1 的情境下，一般會員和 VIP 會員的「享商品九折優惠，滿三千免運費」是剛好一樣但本質不一樣。而在 2
+裡面的才是真的一樣。最簡單看出這差異的方式是，假設今天調整了一般會員的優惠變成了「享商品九五折」，在 1 的條款下 VIP
+會員仍享有商品九折優惠，滿三千免運費，但 2 就沒有了。若沒分清楚 1 和 2 的差異，在實作 1 時用了 2 的作法，就有可能發生「改 A 壞
+B」的情況了（改了一般會員的權利不小心也動到 VIP 會員的）。</p>
+<p>所以當想要把兩個看起來很像的東西，或是一樣的東西抽成共用的時候，先試想一些極端情況來看看這兩個東西還是否一樣。若還是能保持一致的話，那麼抽成共用就不會有什麼大問題，反之，可能就要再斟酌一下下，或是看是否有更小幅度、但確實是真正的可共用的部分。</p>
+<h2 id="利用繼承共用">利用繼承共用</h2>
+<p>關於繼承的「危害」，有許多的不錯的文章已經探討過了，繼承關係會讓這兩個類別產生強藕合，若使用不當，只能享受其「共用」好處的一部分，而同時讓程式難以理解及修改。</p>
+<p>其實最主要的錯不在繼承，而是一般在使用時，很少人會真正仔細地去思考里式替代原則 (Liskov Substitution Principle,
+LSP)。什麼是里式替代原則？原文如下：</p>
+<p><img alt="Let  \\phi(x) be a property provable about objects x of type T. Then\n\\phi(y) should be true for objects y of type S where S is a subtype of\nT." loading="lazy" src="https://latex.codecogs.com/svg.image?\\\\text{Let&space;}\\\\phi\\(x\\)\\\\text{&space;be&space;a&space;property&space;provable&space;about&space;objects&space;}x\\\\text{&space;of&space;type&space;}T\\\\text{.}&space;\\\\\\\\\\\\text{Then&space;}\\\\phi\\(y\\)\\\\text{&space;should&space;be&space;true&space;for&space;objects&space;}y\\\\text{&space;of&space;type&space;}S\\\\text{&space;where&space;}S\\\\text{&space;is&space;a&space;subtype&space;of&space;}T\\\\text{.}"></p>
+<p>原始嚴謹的定義是如此，但在 OOP
+的脈絡中簡單的大意是說，子類別繼承下來的行為，應該要保持和父類別一樣，在一個使用父類別的程式中，把父類別抽換成子類別後，其結果不會被影響（在這個意義下，子類別和父類別是可互相替代的）。這裡的父類別包含一般類別、抽象類別
+(Abstract Class) 及介面（Interface） 。在常見的介紹里式替換的文章裡，通常都會用 Shape / Square /
+Rectangle 算面積作為範例，而這樣簡單的範例就已和一般直覺的行為不同了，所以在使用繼承時，沒有好好地釐清兩個 class
+之前的關係的話，通常都會誤用。因此現在一般都會認為若無法百分之百確定兩者的關係，不如使用「組合」 (composition /has-A)
+取代「繼承」(is-A)。</p>
+<p>但更多時候，很多工程師連想到要去思考這個關係都沒有，單純只是想要「共用」。一個常見的利用繼承共用的例子如下：原本有一個 Controller 會先用
+user ID 取出其 User 的 meta 資料，再拿出他追蹤的前十個使用者資料。新的需求是要有一個新的 Controller ，先用 user ID
+取出其 User 的 meta 資料，再拿出他按讚的貼文。原本的程式可能長得像這樣：</p>
+<pre><code>public class FollowedUserController {  
+  public UserMetaRepo userMetaRepo; // assigned in the constructor
+  public UserRepo userRepo; // assigned in the constructor
+
+  public List&lt;User&gt; getFollowedUsers(String userId) {
+    return userMetaRepo.getFollowedUserIds(userId).stream()
+      .map(userRepo::getUser)
+      .collect(toList());
+  }
+}
+</code></pre>
+<p>新的需求，在前半段基本上是一樣的！都是要先去用 user ID 拿回 user meta，所以就有一種改法會是長這個樣子：</p>
+<pre><code>public class UserMetaController {
+  private UserMetaRepo userMetaRepo; // assigned in the constructor
+  protected List&lt;UserMeta&gt; getUserMeta(String id) {
+    return userMetaRepo.getFollowedUserIds(id);
+  } 
+}
+
+public class FollowedUserController extends UserMetaController {  
+  public UserRepo userRepo; // asigned in the constructor
+
+  public List&lt;User&gt; getFollowedUsers(String id) {
+    return getUserMeta(id).stream()
+      .map(userRepo::getUser)
+      .collect(toList());
+  }
+}
+
+public class LikedPostController extends UserMetaController {  
+  public PostRepo postRepo; // asigned in the constructor
+
+  public List&lt;Post&gt; getLikedPosts(String id) {
+    return getUserMeta(id).stream()
+      .map(postRepo::getLikedPost)
+      .collect(toList());
+  }
+}
+</code></pre>
+<p>可以看到，<code>FollowedUserController</code> 和 <code>LikedPostController</code> 在概念上完全不同的東西，因為「實作」的相似而透過
+<code>UserMetaController</code> 被藕合在一起了。這產生了兩個問題：</p>
+<ul>
+<li>一個還未爬完整個 code base 的人，會無法了解為什麼 <code>UserMetaController</code> 和 <code>FollowedUserController/LikedPostController</code> 有什麼關係？而這個繼承關係也並不直覺。</li>
+<li>未來若 <code>LikedPostController</code> 的使用流程改變，改成可以直接用 user ID 去 <code>postRepo </code>拿到相對應的 posts，但 <code>FollowedUserController</code> 的流程沒有改變，此時整個繼承關係都要修改。</li>
+</ul>
+<h2 id="要怎麼共用">要怎麼共用？！</h2>
+<p>這樣一講，感覺好像很多都不能共用了吧？</p>
+<p>其實以上雖然看似三點，但其實背後都是相同的道理：共用的準則，就是要深入地好好想看看，你準備抽出來的程式碼片段，他是在「意圖」上是相同的，還是只是「實作」上相同？若是「意圖」上相同，抽取出來共用就沒有問題，但若只是「實作」上相同，而意圖上不同的話，這樣最好是不要抽成共用，或是拆解成「意圖」與「實作」相符的
+Utility Class 比較好。</p>
+<p>比如以前面 SQL Query 的例子來說，若抽成共用是以<strong>產生 Query 的 Utility</strong> 的角度來下手，意圖從「共用
+<code>getAdultsQuery</code> 和 <code>getComicBooksQuery</code> 的實作」轉變成「共用產生 SQL Query
+的工具」，這樣會抽取的共用程式碼目的及擺放的位置都會不同（很自然地就不會把他放在一個 XXXXBase 的父類別裡），比如可以產生一個 fluent
+query builder library 來讓程式碼易用：</p>
+<pre><code>class class SQLQueryBuilder {
+  // impl.
+}
+
+public String getAdultsQuery() {
+  return qb.select(&quot;name&quot;, &quot;age&quot;)
+    .from(&quot;users&quot;)
+    .where(&quot;age&quot;).ge(18)
+    .limit(10)
+    .build();
+}
+
+public String getComicBooksQuery() {
+  return qb.select(&quot;*&quot;)
+    .from(&quot;books&quot;)
+    .where(&quot;type&quot;).eq(&quot;comics&quot;)
+    .limit(10)
+    .build();
+}
+</code></pre>
+<p>以上幾種常見的共用誤區你有沒有踩到呢？下次打算要重構抽取共用程式碼時，可以停下來多想想，避免寫出之後很難改動的共用程式！</p>
+<h3 id="分享">分享:</h3>
+<ul>
+<li><a href="https://yehzu.net/2022/04/30/%e7%a8%8b%e5%bc%8f%e7%a2%bc%e5%85%b1%e7%94%a8/?share=facebook"> 按一下以分享至 Facebook(在新視窗中開啟) Facebook </a></li>
+<li><a href="https://yehzu.net/2022/04/30/%e7%a8%8b%e5%bc%8f%e7%a2%bc%e5%85%b1%e7%94%a8/?share=linkedin"> 分享到 LinkedIn(在新視窗中開啟) LinkedIn </a></li>
+<li><a href="https://yehzu.net/2022/04/30/%e7%a8%8b%e5%bc%8f%e7%a2%bc%e5%85%b1%e7%94%a8/?share=twitter"> 按一下即可分享至 X(在新視窗中開啟) X </a></li>
+<li></li>
+</ul>
+<p>喜歡 正在載入&hellip;</p>
+<h3 id="相關"><em>相關</em></h3>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>談 Clean Architecture 的實作（一）</title>
+      <link>http://localhost:1313/posts/2022-04-09-3/</link>
+      <pubDate>Sat, 09 Apr 2022 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2022-04-09-3/</guid>
+      <description>&lt;p&gt;Uncle Bob 的 Clean 三部曲（《Clean Code》 / 《Clean Coder》 / 《Clean
+Architecture》）自從問世後，一直是各種軟體社群或是讀書會常見的內容。對於這三本書，我個人簡短的心得是：《Clean Code》
+講述在軟體實作時，怎樣的好習慣及作法，會讓撰寫出來的程式碼易於維護。《Clean Coder》 則是在探討，在時程、預算或是其他隕石的壓力之下，身為一位有著
+Clean Code 思維的工程師要怎麼應對進退，以達到程式還是 Clean Code 的目的。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>Uncle Bob 的 Clean 三部曲（《Clean Code》 / 《Clean Coder》 / 《Clean
+Architecture》）自從問世後，一直是各種軟體社群或是讀書會常見的內容。對於這三本書，我個人簡短的心得是：《Clean Code》
+講述在軟體實作時，怎樣的好習慣及作法，會讓撰寫出來的程式碼易於維護。《Clean Coder》 則是在探討，在時程、預算或是其他隕石的壓力之下，身為一位有著
+Clean Code 思維的工程師要怎麼應對進退，以達到程式還是 Clean Code 的目的。</p>
+<p>相較於第三本 《Clean Architecture》，前兩本書有著比較多的程式碼範例及舉例，而 《Clean Architecture》
+則是在闡述軟體的各種邊界，針對不同的邊界配合 S.O.L.I.D. 原則，達成一個易擴展、修改、測試及易讀易懂的架構，也就是所謂的 Clean
+Architecture。也由於邊界的界定與工程師的抽象能力、品味、domain know-how 等息息相關，所以在這本書中 Uncle Bob
+幾乎沒有提供較實際的例子可以讓讀者參考。</p>
+<p>當初會想要引入 Clean Architecture (CA) 進團隊內，是因為一個有極大時程壓力的專案。我們舊的架構沒辦法在許多外部系統的介面、DB
+schema 還沒確定之下，就進入商業邏輯的開發，進而導致無法在時程內完成。而 Uncle Bob
+在書中反覆提到的「先實作商業邏輯，盡量延遲決定實作細節」的概念在當時跳入我的腦中：外部系統的介面，就是所謂「實作細節」的一種。若我們能導入
+CA，就可以在外部系統一邊還在討論的情況下，進入商業邏輯的開發及針對其做單元測試。如此原本看似有時序關係的開發，就可以拆成平行處理，大幅縮短開發時程。</p>
+<p>由於書中對於如何創建這樣的架構沒有著墨，當時在 github 找了幾個別人的模版並做了一些自己的調整後，大約兩天內就針對我們的某個 use case
+寫了一個 prototype 來。後來藉由這個專案，我們團隊實際使用 CA 寫了六個 use
+case，並把所有外部依賴的實作都推遲到所有討論都穩定後才進行開發，減少了實作到一半又要修改的機會。同時在時限內，也沒有犧牲掉程式品質，測試涵蓋率達到了
+85% 以上。</p>
+<p>因為不依賴於真正的實作，所以我們可以在開發中期 DB Schema 還沒完全決定時，就先用簡單幾行程式去模擬真實 DB
+的行為，讓我們的使用者在開發中期使用我們的 API 時像是真實的 API 一樣，所有的商業邏輯都是正確能使用的，不是只是靜態的 mock
+response。當後期 DB schema
+決定後，抽換後面的實作及塞進相同的假資料，轉換的過程使用者完全不會感受到有什麼不同。同時寫出來的測試也自然不會依賴於實作，測試自然就能對抗
+refactoring ，使得後期串接上真的實作時，也不需要修改已有的測試，而只是要新增對於實作的測試而已。整個開發過程沒有「白工」，頗符合 Open-
+Closed 原則 XD。</p>
+<p>另一個好處是，這個架構有簡單的開發原則，除卻邊界應該要怎麼界定之外（這仰賴 team 內的討論），如何
+import，什麼樣的物件應該放在哪裡，都有更為明確的定義，讓每個團隊成員在 code review 的階段就能很容易地且客觀地看出是否有大問題，也大幅減少
+new hire / newbie 的進入障礙及失誤。</p>
+<p>這個系列還不確定會寫幾篇，不過預期是要針對一個簡單的 use case ，以實際的程式碼來說明我的 CA 實作中 (Java)，package
+的管理方式、組件依賴方向的原則是什麼，以及示範如何簡單的抽換實作及測試。期望這樣的內容可以讓還未了解 CA
+的做法及好處的同行們能夠將這樣的概念用在自己的專案中，讓未來開發的日子更加愉快！</p>
+<p>(To be continued…)</p>
+<h3 id="分享">分享:</h3>
+<ul>
+<li><a href="https://yehzu.net/2022/04/09/%e8%ab%87-clean-architecture-%e7%9a%84%e5%af%a6%e4%bd%9c%ef%bc%88%e4%b8%80%ef%bc%89/?share=facebook"> 按一下以分享至 Facebook(在新視窗中開啟) Facebook </a></li>
+<li><a href="https://yehzu.net/2022/04/09/%e8%ab%87-clean-architecture-%e7%9a%84%e5%af%a6%e4%bd%9c%ef%bc%88%e4%b8%80%ef%bc%89/?share=linkedin"> 分享到 LinkedIn(在新視窗中開啟) LinkedIn </a></li>
+<li><a href="https://yehzu.net/2022/04/09/%e8%ab%87-clean-architecture-%e7%9a%84%e5%af%a6%e4%bd%9c%ef%bc%88%e4%b8%80%ef%bc%89/?share=twitter"> 按一下即可分享至 X(在新視窗中開啟) X </a></li>
+<li></li>
+</ul>
+<p>喜歡 正在載入&hellip;</p>
+<h3 id="相關"><em>相關</em></h3>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>淺談程式的可讀性</title>
+      <link>http://localhost:1313/posts/2022-03-19-8/</link>
+      <pubDate>Sat, 19 Mar 2022 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2022-03-19-8/</guid>
+      <description>&lt;p&gt;什麼是可讀性高的程式？常常被人掛在嘴邊說這是一個見人見智的問題，但，真的是這樣嗎？基本上所有的工程師在撰寫程式的當下，都覺得自己的程式可讀性是很高的，但這往往陷入了自我感覺良好的陷阱裡面…&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>什麼是可讀性高的程式？常常被人掛在嘴邊說這是一個見人見智的問題，但，真的是這樣嗎？基本上所有的工程師在撰寫程式的當下，都覺得自己的程式可讀性是很高的，但這往往陷入了自我感覺良好的陷阱裡面…</p>
+<p>寫了這幾年的程式，並且一直努力在嘗試增進程式可讀性的我，對這個題目有一點想法。</p>
+<p>首先，為什麼會說一般工程師在寫程式的當下，高可讀性是自我感覺良好呢？我想大家一定都有這樣的經驗：在新增一段需求的時候，覺得前人寫的 code
+實在是慘不忍睹，因為一來看了半天才看懂這段實作，二來，看懂了實作，卻看不出為什麼要寫這段 code。正生氣時， git blame
+一下卻發現是自己半年前寫的，這下可尷尬了…剛剛吐出來的髒話完全罵到了自己。</p>
+<p>「什麼！！怎麼可能！！？」</p>
+<p>這是很容易發生的事，因為在撰寫的當時，只有撰寫的人是最了解整段修改是為了什麼，以及每個小調整的用意。在那個當下，每一段程式碼都是你精鎚百鍊的結果（如果不是的話…那看不懂就非常應該了XD）。因此，就算程式碼真實的可讀性不好，在你的腦中也會幫中間的斷點補上連結，設計不良的介面有聲音說服自己這個很自然，總之，自己一定會覺得可讀性很好。但隨著時間過去，記憶開始淡化之後，原本在腦中連成一片的邏輯就被打回原形，程式就變得不好讀了。</p>
+<h2 id="怎樣才是高可讀性">怎樣才是高可讀性？</h2>
+<p>要達到 100%
+可讀的程式碼，我覺得是相當困難、甚至是不可能的。這要有非常好的程式品味，抽象分層能力，以及語言掌握功力。但縱使如此，也未必能讓人人都看得懂（先埋個伏筆XD）。如果不是這樣大神級的工程師，只是一個剛入行、或是工作幾年的工程師，就沒有辦法寫出好讀的程式了嗎？</p>
+<p>不。可讀性不是非黑即白，而是有相對的好讀和不好讀，能夠往好讀一些的方向走，在未來需要修改或重構時，就很有價值了！網路上講可讀性的文章很多，有些常見的技巧如：為常數命名、命名方式、early
+return、一次做一件事，等等，這篇文章就不贅述。這篇文章想說的，是寫程式時的心態、以及程式碼會怎麼從好讀走向不好讀。高可讀性的程式碼，我認為在撰寫程式時，從以下三個方向要求自己，基本上就不會有大問題：</p>
+<ol>
+<li>時時刻刻換位思考 – 把自己當成完全沒看過這段 code 的人</li>
+<li>想像在寫書的目錄 – 注意同個 code block 中的抽象層次是否相同</li>
+<li>不寫註解、寫註解 – 不寫廢話，寫人家不知道的東西</li>
+</ol>
+<h3 id="時時換位思考">時時換位思考</h3>
+<p>換位思考的重點，是把自己當作完全不懂脈絡的人，最好是把自己假想成團隊中程式能力最弱且不知道脈絡的情況。每寫完一個 method /
+function，先拋開已知的任何前提，單純地去看我是否能夠用這個 method 裡的所有資訊，就能得知這個 method
+在做什麼？如果不行，那是缺了什麼我不知道？有沒有辦法修改程式避免這個問題？</p>
+<h3 id="想像在寫書的目錄">想像在寫書的目錄</h3>
+<p>我在讀書時會先掃過書的目錄，他是整本書的大綱及架構，有了這個概念再去讀書，就比較能了解作者寫作的安排。程式碼也是一樣的。一段程式碼片段，就像在寫書的目錄一樣，讓人快速掃過之後，就可以有大概的了解。而要知道細節，就要再往下一層去探索。</p>
+<p>這邊用一個簡單的例子來表達這個概念，大家可以先看這段程式碼，並試圖理解這段程式的作用：</p>
+<pre><code>public User getUser(String userId) {
+  var user = getFromCache(userId);
+  if (user != null) {
+    return user;
+  } 
+
+  user = userRepo.getUser(userId);
+
+  setCache(userId, user);
+  return user;
+}
+</code></pre>
+<p>應該不難理解這就是用 <code>userId</code> 先嘗試從 cache 拿取 user，若 cache miss 則改從 db 拿取的一段程式碼。可以看到
+<code>getFromCache / setCache</code> 是在相同的抽象層級，如此會讓程式碼容易閱讀，那怎麼樣是不同的抽象層級呢？</p>
+<pre><code>public User getUser(String userId) {
+  var userCacheKey = &quot;userEntity:&quot; + userId;
+  var user = null;  
+  try {
+    user = cache.get(userCacheKey);
+  } catch (CacheMissException cme) {
+    log.debug(&quot;cache miss, userId = {}&quot;, userId);
+  }
+
+  if (user != null) {
+    return user;
+  }
+
+  user = userRepo.getUser(userId);
+  setCache(userId, user);
+  return user;
+}
+</code></pre>
+<p>這段程式碼把原先的包在 <code>getFromCache</code> 的實作細節放在 <code>getUser</code> 這個層次，和 <code>L15</code> 的 <code>setCache</code>
+是不同的抽象層級，這樣的程式碼反而比把下面全部實作都曝露在外的程式碼還要難以閱讀；因為想要 high-level
+地了解這段程式在做什麼也不行，想要直接看到全部的細節也不行。</p>
+<pre><code>public User getUser(String userId) {
+  var userCacheKey = &quot;userEntity:&quot; + userId;
+  var user = null;  
+  try {
+    user = cache.get(userCacheKey);
+  } catch (CacheMissException cme) {
+    log.debug(&quot;cache miss, userId = {}&quot;, userId);
+  }
+
+  if (user != null) {
+    return user;
+  }
+
+  user = userRepo.getUser(userId);
+
+  try {
+    cache.set(userCacheKey, user);
+  } catch (Exception e) {
+    log.debug(&quot;cache failed, userId = {}&quot;, userId);
+  }
+  return user;
+}
+</code></pre>
+<p>實務上這種抽象程度不一致的情況履見不鮮，幾種可能：一是當時撰寫的工程式抽象功力不足，導致上下的抽象程度不對稱。但更可能的是，有一位工程師在修改下段
+<code>setCache</code> 的例外處理時，覺得應該要以 method 將這段包起來，於是把整個 try-catch block 抽出去成
+<code>setCache</code>，卻沒發現上面也應該要一起抽出去。在這麼小的一段程式碼大家可能會覺得「怎麼可能只抽下段不抽上段的 cache
+code」，但若是複雜一點的情況，或是原本的介面有點難處理時，有些工程師可能就只會「改一半」，老實說，我會認為要嘛整個改好，要嘛寧可不要改。</p>
+<h3 id="不寫註解寫註解">不寫註解、寫註解</h3>
+<p>到底好的程式，需不需要寫註解？這是一個萬年大哉問。 google 搜尋這個問題，可以發現正反面的意見都有，我想這是任一工程師在工作上，一定會遇到的問題。</p>
+<p>有些人看了 Uncle Bob 的 《Clean Code》 後，標榜著「Clean Code 就是不要寫註解」，我認為這是重大的誤會。其實《Clean
+Code》裡舉的例子，是那種會誤導別人、或根本是廢話的註解，比如解釋「這邊在做什麼」，都應該能透過程式手段 — 不論是好的命名、抽出
+method、或是其他的方式 — 來處理，避免改了實作卻沒改到註解的情況。</p>
+<p>但有一種註解我認為是要寫的：就是在一些不「自然」邏輯的處理上，去解釋「為什麼這邊要這樣做」。這種註解是要解釋做這件事情的意圖、意義，而通常會這樣做，是因為沒有什麼邏輯的商業需求或規定，又或者是某一段時間對某種情況的
+workaround。當然，這必然要在版本控制中交代清楚，但能在程式碼中附上相關的票及脈絡，其實是增加可讀性的。</p>
+<h2 id="團隊能力的一致性">團隊能力的一致性</h2>
+<p>這點，在外面的可讀性文章很少被提出來討論。為什麼前面會說，大神級的 code
+也未必人人都懂呢？因為程式碼是由團隊維護，程式好不好讀是由團隊的程式水準決定的。有的時候前人寫了一個分層明確、合理、低耦合好擴展的架構，隨著人員流動，最後落入了程式能力較差的團隊中，對於這個團隊反而變成「不好讀」！</p>
+<p>怎麼會如此？舉個比較極端的例子，一個才剛學會 if-else 的新手，因為對於程式的抽象功能還不了解，不可能會看得懂依照 Clean
+Architecture 寫出來的程式，反而義大利麵程式碼比較適合他。以剛才 <code>getUser</code>
+的例子，若換成以下兩種寫法，你對於他們可讀性的評分是怎麼樣呢？</p>
+<pre><code>@Cached
+public User getUser(String userId) {
+  return userRepo.getUser(userId);
+}
+
+
+
+// UserController.java
+interface UserController {
+  User getUser(String userId);
+}
+
+// UserControllerImpl.java
+public User getUser(String userId) {
+  return userRepo.getUser(userId);
+}
+
+// CachedUserController.java
+public User getUser(String userId) {
+  var user = getFromCache(userId);
+  if (user != null) {
+    return user;
+  }
+
+  user = userController.getUser(userId);
+
+  setCache(userId, user);
+  return user;
+}
+</code></pre>
+<p>這兩種方式都是能讓程式達到 Open-Closed Principle 的常見手法。第一段程式是用 Aspect-oriented programming
+(AOP) 的方式將 cache 存取邏輯包在實際向 db 存取 <code>user</code> 之外，但對於這不了解 AOP
+的工程師來說，這簡直不可思議，甚至會覺得把這種東西藏在裡面到底在搞什麼鬼。可是對於有 AOP
+經驗的工程師來說，這是很自然也合理的做法，也讓真正的業務邏輯不會被淹沒在 cache
+存取這種重複性很高的實作細節之中，進而提升「可讀性」及程式的可擴展性。而第二段則是利用 proxy pattern 的方式做同樣的事情，但對於不清楚
+proxy pattern 目的的工程師來說，在追蹤某個使用 <code>UserController</code> interface
+的情境而想要看到真正的實作時，會覺得為什麼程式要寫得這麼繞、很難追蹤。</p>
+<p>低耦合好擴展的程式，一定有許多的分層以及使用介面來做依賴反轉。在不明白程式碼架構、IDE
+功能不熟悉、沒看到實作細節就無法理解、或是不習慣如此寫程式的工程師眼中，這樣的程式不好除錯（因為沒辦法很容易地跳到真正的實作）、看似同樣的東西「重複」做（但其實是為了分層），接著很可能就被這團隊魔改之後變成四不像，整個
+code base 就又更難讀了。</p>
+<p>因此，維持團隊能力和程式碼的一致，是非常重要的部分。甚至，一個好的工程師應該要遷就團隊能力，放棄更好的程式碼來換取整體團隊的維護能力，而不是孤芳自賞地寫只有自己看得懂，但其他人都看不懂的東西出來。但這並不表示好的工程師就應該要放棄寫好的程式，相反地，應該要為了能寫好的程式並讓團隊能夠維護，而去提升團隊整體程式功力！常見的方式有
+Pair Programming、詳細的 Code
+Review、舉辦讀書會或是工作坊、凝聚大家撰寫程式時的模版共識…等等做法。如此，不僅能讓團隊能力提升、也增加自己在公司中的影響力，最重要的，是讓自己未來的日子變輕鬆！</p>
+<h2 id="所以可讀性是">所以，可讀性是？</h2>
+<p>沒有所謂的「最好讀的程式」，可讀性是一個狀態、光譜，取決於「由什麼樣的人去讀」。我們要撰寫的，是讓維護團隊都能看得懂的程式。因此在撰寫程式時，換位成同事或是未來的自己、忘掉目前知道的所有事情，盡量保持一個
+method
+中的抽象程度一致，並為一些無法解釋的神奇商業邏輯加上註解。另一方面，協助團隊能力提升，讓大家理解並懂得欣賞好的程式架構及語言寫作方式，而非去寫團隊都沒辦法理解的高深程式碼，如此一來你的程式碼就不會難讀了。</p>
+<h3 id="分享">分享:</h3>
+<ul>
+<li><a href="https://yehzu.net/2022/03/19/%e6%b7%ba%e8%ab%87%e7%a8%8b%e5%bc%8f%e7%9a%84%e5%8f%af%e8%ae%80%e6%80%a7/?share=facebook"> 按一下以分享至 Facebook(在新視窗中開啟) Facebook </a></li>
+<li><a href="https://yehzu.net/2022/03/19/%e6%b7%ba%e8%ab%87%e7%a8%8b%e5%bc%8f%e7%9a%84%e5%8f%af%e8%ae%80%e6%80%a7/?share=linkedin"> 分享到 LinkedIn(在新視窗中開啟) LinkedIn </a></li>
+<li><a href="https://yehzu.net/2022/03/19/%e6%b7%ba%e8%ab%87%e7%a8%8b%e5%bc%8f%e7%9a%84%e5%8f%af%e8%ae%80%e6%80%a7/?share=twitter"> 按一下即可分享至 X(在新視窗中開啟) X </a></li>
+<li></li>
+</ul>
+<p>喜歡 正在載入&hellip;</p>
+<h3 id="相關"><em>相關</em></h3>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>資料科學團隊的敏捷管理</title>
+      <link>http://localhost:1313/posts/2022-03-10-9/</link>
+      <pubDate>Thu, 10 Mar 2022 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2022-03-10-9/</guid>
+      <description>&lt;p&gt;去年時，從一個純 Backend 轉調到資料科學團隊時，還滿不習慣的。最主要的差異是，那時的這個團隊，雖然也是跑著 scrum，但每次 demo
+時，ticket 的完成率常常只有不到 50%，有些票更是很容易橫跨三、四個 sprint 也關不掉。這對於剛從一個 scrum
+跑得非常成熟的團隊轉出來的我，非常地不適應。老實說，當時的我沒有想太多，只覺得這個 scrum 跑得不是很成功，但後來回想，不適應的原因大概有幾點：&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>去年時，從一個純 Backend 轉調到資料科學團隊時，還滿不習慣的。最主要的差異是，那時的這個團隊，雖然也是跑著 scrum，但每次 demo
+時，ticket 的完成率常常只有不到 50%，有些票更是很容易橫跨三、四個 sprint 也關不掉。這對於剛從一個 scrum
+跑得非常成熟的團隊轉出來的我，非常地不適應。老實說，當時的我沒有想太多，只覺得這個 scrum 跑得不是很成功，但後來回想，不適應的原因大概有幾點：</p>
+<ol>
+<li>無法估量每個成員的產出</li>
+<li>無法比較有效、或是具體的在 retrospective meeting 中去討論如何改善</li>
+<li>團隊士氣低落、缺乏動能</li>
+</ol>
+<p>於是，身為 Team Leader，開始想要著手改善這個部分。</p>
+<p>天真如我，一開始覺得是這樣的問題，就是源自於 ticket
+的完成條件沒有被好好的定義，只要完成條件定義好，一張票的估點及完成，應該都是相差不遠才對。豈知這個想法，雖然沒錯，但就錯在資料科學有一些任務，是沒辦法簡單的在一開始就定義好完成條件的。又或者說，定義的方式，並不是那麼直覺單純。</p>
+<h2 id="資料科學任務的性質">資料科學任務的性質</h2>
+<p>一般的 Backend 任務，不論是系統面或是實作面，大家對於目標的理解及完成比較不會有太大的變動，若有比較大的變動，也比較容易在 Daily
+會議中針對中途發生的問題有所調整。</p>
+<p>回到這些在資料科學中，無法如期收斂的任務，其大多數都是所謂「研究性」任務，比如說：研究如何使 CTR 增加
+10%、如何如用使用者點擊資料，等等。這種類型的任務，最常見的狀況是在進行的過程中，發現新的可能性、可以再去研究的目標、或是發現原定的目標不符合預期，而導致整個任務的目標一直被調整，而讓完成時程越拖越長。而其變動的頻率及範圍，也比一般
+Backend 任務要頻繁且大，因此若規畫到一般 scrum 的 Daily 去處理，很可能一變動下，許多在 Planning 承諾的任務，都被迫要移出該
+sprint 中，反而排擠掉其他可能做到中途的任務而讓許多 demo 無法呈現，看似 sprint 的完成度提升，實則沒有什麼任務完成。</p>
+<h2 id="目前的解決方式">目前的解決方式</h2>
+<p>仔細探究，資料科學任務很適合使用看版（kanban）方式來操作。一旦有新的想法、可能性，就可以先把這個發想開新的一個
+ticket，並回到原本該做的實驗上。若是原實驗已不合適，也可將現有的 ticket 關掉並拿下一個 ticket
+來做。如此，成員的產出能夠估算，也不會讓人覺得 ticket 一直停在原地不會往前。</p>
+<p>結合 scrum 在一般軟體開發上能持續以 MVP 產出為目標的優點，及 kanban
+讓產線工作能被記錄且移動的特性，我們將資料科學類型的任務與一般較易估算點數的任務分開，跑 scrum / kanban 的混合模式。在 scurm
+sprint 的 planning 時，我們就會決定要將 velocity 的一部分點數用於跑 kanban 上，其餘的點再分配給 scrum。</p>
+<h2 id="總結">總結</h2>
+<p>使用 scrum 方式，對於結果未知的研究性任務來說，並不合適。我們使用 kanban + scrum
+來分別記錄及追縱一般及研究性任務，提升成員的士氣，也讓產出可以比較忠實地量化。</p>
+<p>之後再來撰文來說明，研究性的任務應該要如何設定驗收標準，才比較容易收斂，提供進一步任務更具體且有用的基石。</p>
+<h3 id="分享">分享:</h3>
+<ul>
+<li><a href="https://yehzu.net/2022/03/10/%e8%b3%87%e6%96%99%e7%a7%91%e5%ad%b8%e5%9c%98%e9%9a%8a%e7%9a%84%e6%95%8f%e6%8d%b7%e7%ae%a1%e7%90%86/?share=facebook"> 按一下以分享至 Facebook(在新視窗中開啟) Facebook </a></li>
+<li><a href="https://yehzu.net/2022/03/10/%e8%b3%87%e6%96%99%e7%a7%91%e5%ad%b8%e5%9c%98%e9%9a%8a%e7%9a%84%e6%95%8f%e6%8d%b7%e7%ae%a1%e7%90%86/?share=linkedin"> 分享到 LinkedIn(在新視窗中開啟) LinkedIn </a></li>
+<li><a href="https://yehzu.net/2022/03/10/%e8%b3%87%e6%96%99%e7%a7%91%e5%ad%b8%e5%9c%98%e9%9a%8a%e7%9a%84%e6%95%8f%e6%8d%b7%e7%ae%a1%e7%90%86/?share=twitter"> 按一下即可分享至 X(在新視窗中開啟) X </a></li>
+<li></li>
+</ul>
+<p>喜歡 正在載入&hellip;</p>
+<h3 id="相關"><em>相關</em></h3>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>子彈筆記使用心得</title>
+      <link>http://localhost:1313/posts/2022-02-12-2/</link>
+      <pubDate>Sat, 12 Feb 2022 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2022-02-12-2/</guid>
+      <description>&lt;p&gt;從小，我就算是一個記憶力比較好的人，很多事情看過去就大概能記得十之八九。剛上國中時，當時的國文老師教我們如何記筆記。當時的我，只懂得乖乖的把老師的上課內容一字不漏的記錄下來，但要記錄的東西太多而課本的空間很有限，因此那時老師提到：「筆記，只要記錄你不知道的東西就好了」時，對我來說是印象非常深刻的。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>從小，我就算是一個記憶力比較好的人，很多事情看過去就大概能記得十之八九。剛上國中時，當時的國文老師教我們如何記筆記。當時的我，只懂得乖乖的把老師的上課內容一字不漏的記錄下來，但要記錄的東西太多而課本的空間很有限，因此那時老師提到：「筆記，只要記錄你不知道的東西就好了」時，對我來說是印象非常深刻的。</p>
+<p>那時，我也有面臨到課本的內容並沒有辦法很容易的記到腦子裡。但當時的我還滿聰明的（
+自己說XD），發現金庸小說的內容我可以過目不忘，那為什麼課本的內容不行？因此我改變了讀課本的心態，把讀課本當作是課外書，意外的解決了事情記不進腦中的瓶頸。</p>
+<p>這樣的作法，居然也讓我一路順利的過到現在…XD
+現在回想起來，他並沒有解決真正的問題，只是減少了我上課要抄的內容量，但基本上還是一樣的筆記方式。大部分的內容，我只是有能力快速的記錄下來，並在腦內可以很快的做連結。如果以軟體工程師的術語來說，就是把一堆
+raw data 放進 memory 裡，並依靠比較強的 cpu 能力在真正要使用的時候 runtime
+把要的結果給算出來。而這樣的作法，一直到我現在30多歲後，隨著身體素質的下降（硬體規格上不去反而還下降了XD）以及工作量的提升與多元，已經開始行不通了…所以我必須要有一個好的方式讓我的能力可以
+scale，否則我無法再擴展想做的事情以及影響力了。</p>
+<h2 id="那怎麼辦">那怎麼辦…</h2>
+<p>我開始嘗試把事情記錄下來。</p>
+<p>最一開始，我從最常見的 GTD (Get Things Done) 方式開始，並佐以一些 To Do List
+應用軟體。但這個方式試了幾次，發現我一直無法養成把要做的事情寫到 To Do List 的習慣。因此我的 To Do List
+一直都是不完整的。有些待辦事項，也會因為軟體自動往後延期，一直掛在每日該做的事項上，遲遲無法消除。久而久之，整個 GTD process 就卡住不動了。</p>
+<p>另一方式，我也開始把工作上的事項記錄到筆記本中。但過往的日子裡，我從來沒有整理筆記的經驗與習慣…（真的…我以前居然可以這樣考過這麼多的考試XD），所以每當我試圖想把同樣的東西放進一頁中，常常會找不到之前把這樣的內容寫到哪一頁裡，只好另開新頁，然後某天才會突然發現同樣的事情寫到好幾頁地方去了。同時也因為沒有整理筆記的習慣，所以把事情記錄到筆記中，似乎只是一個讓自己安心，但實質上一點幫助也沒有的動作。</p>
+<p>最後，我所做的很多嘗試一點也沒有改善這樣的情況…</p>
+<h2 id="子彈筆記">子彈筆記</h2>
+<p>第一次聽到子彈筆記，是在金叔辦的讀書會上由阿瑽分享的。當時聽完還沒有太深刻的感覺（因為那時候憑記憶還能 cover
+工作上的內容）。於是當我受了這些挫折之後在書店裡尋找有沒有做筆記的方式時，《子彈思考整理術》這本書很自然的就吸引了我的目光。</p>
+<p>買回來後，十分興奮的馬上開始了解子彈筆記是如何去組織一個筆記本的，並在隔天就立刻照著書中的指引來實作。到寫下這篇文章時，才開始第五天，但我很明確的感受到心中的安心感，以及他對我目前工作上的改善。以下就先列出目前我感受到的部分：</p>
+<ul>
+<li>透過手寫轉移，把東西寫出來，感覺很好</li>
+<li>手寫轉移的過程中，更有時間去思考一個任務的內容，而非讓軟體方便的做完這件事</li>
+<li>利用索引來把不連續的頁面連貫起來，解決我之前內容散落的問題</li>
+<li>日誌的設計，可以無壓力的想到什麼就寫什麼，而不影響其他的頁面</li>
+<li>早晚的反思時間，強迫自己面對一直延後的事項，是要另行安排還是直接刪除</li>
+<li>群組頁的設計，讓我可以更容易去連結零散會議下的各種討論</li>
+</ul>
+<p>雖然到目前才使用五天，但感受比 GTD 的方式有感非常多。目前 GTD
+軟體我就當作是一個輔助工具，以手寫的子彈筆記為主，也在今年立下要養成以子彈筆記來管理生活的目標 🙂</p>
+<h3 id="分享">分享:</h3>
+<ul>
+<li><a href="https://yehzu.net/2022/02/12/%e5%ad%90%e5%bd%88%e7%ad%86%e8%a8%98%e4%bd%bf%e7%94%a8%e5%bf%83%e5%be%97/?share=facebook"> 按一下以分享至 Facebook(在新視窗中開啟) Facebook </a></li>
+<li><a href="https://yehzu.net/2022/02/12/%e5%ad%90%e5%bd%88%e7%ad%86%e8%a8%98%e4%bd%bf%e7%94%a8%e5%bf%83%e5%be%97/?share=linkedin"> 分享到 LinkedIn(在新視窗中開啟) LinkedIn </a></li>
+<li><a href="https://yehzu.net/2022/02/12/%e5%ad%90%e5%bd%88%e7%ad%86%e8%a8%98%e4%bd%bf%e7%94%a8%e5%bf%83%e5%be%97/?share=twitter"> 按一下即可分享至 X(在新視窗中開啟) X </a></li>
+<li></li>
+</ul>
+<p>喜歡 正在載入&hellip;</p>
+<h3 id="相關"><em>相關</em></h3>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>《最高學以致用法》讀書心得</title>
+      <link>http://localhost:1313/posts/2021-01-26-6/</link>
+      <pubDate>Tue, 26 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2021-01-26-6/</guid>
+      <description>&lt;p&gt;我原本是個只愛看書/看文章的人。因為我的閱讀及理解速度很快，閱讀對我來說，有很大的成就感。&lt;br&gt;
+但內心一直會覺得，只是知道，沒有拿出來用，好像也只是紙上談兵而已。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>我原本是個只愛看書/看文章的人。因為我的閱讀及理解速度很快，閱讀對我來說，有很大的成就感。<br>
+但內心一直會覺得，只是知道，沒有拿出來用，好像也只是紙上談兵而已。</p>
+<p>在看了最高學以致用法之後，其中最讓我印象深刻的是 3:7 法則：輸入和輸出的比例為 3:7
+是最好的情況。將自己的學習轉為輸出，記憶會更為深刻。裡面提到的幾個方式：寫日記、寫讀書心得、教學、都是很好的方式。而在安排投影片、發想新創意時，則是應該先使用傳統方式：書寫，做為開始。往細部實行時，再轉為數位，會是比較好的方式。</p>
+<p>我會想來把自己所看/聽聞到的東西，轉為自己的輸出。未來我想每天的早晨，花個五分鐘來記畫當天想做的事。再每天晚上花個五分鐘，寫個簡短的日記，作為一天的總結。也會試著將想做的事、挑戰，拆成比較小的一個一個目標來實行。再怎麼樣，有往前一小小步的犯錯，比在原地踏步而什麼都不做要來得好。</p>
+<p>很喜歡這本書的編排，小小的單元，每一個單元都是簡單而可實行的觀念。</p>]]></content:encoded>
+    </item>
   </channel>
 </rss>

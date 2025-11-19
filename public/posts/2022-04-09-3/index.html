@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>談 Clean Architecture 的實作（一） | 小葉隨筆</title>
+<meta name="keywords" content="CA, 開發, 敏捷">
+<meta name="description" content="Uncle Bob 的 Clean 三部曲（《Clean Code》 / 《Clean Coder》 / 《Clean
+Architecture》）自從問世後，一直是各種軟體社群或是讀書會常見的內容。對於這三本書，我個人簡短的心得是：《Clean Code》
+講述在軟體實作時，怎樣的好習慣及作法，會讓撰寫出來的程式碼易於維護。《Clean Coder》 則是在探討，在時程、預算或是其他隕石的壓力之下，身為一位有著
+Clean Code 思維的工程師要怎麼應對進退，以達到程式還是 Clean Code 的目的。">
+<meta name="author" content="yehzu">
+<link rel="canonical" href="http://localhost:1313/posts/2022-04-09-3/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.f608f704390d768ebdd94b11f04a9fb19a7a673792c46355607351de2be783ff.css" integrity="sha256-9gj3BDkNdo692UsR8EqfsZp6ZzeSxGNVYHNR3ivng/8=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/2022-04-09-3/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --theme: light;
+        --primary: #2A2424;
+        --secondary: #666;
+        --tertiary: #fef9f6;
+        --content: #2A2424;
+        --hljs-bg: #f8f8f8;
+        --code-bg: rgba(42, 36, 36, 0.05);
+        --border: rgba(42, 36, 36, 0.08);
+    }
+
+    body {
+        background-color: #fef9f6 !important;
+        font-family: 'Noto Serif TC', Georgia, 'Times New Roman', Times, serif !important;
+        color: #2A2424 !important;
+        line-height: 1.7;
+    }
+
+     
+    h1, h2, h3, h4, h5, h6 {
+        color: #2A2424 !important;
+        font-family: 'Noto Serif TC', Georgia, serif !important;
+    }
+
+     
+    .header nav {
+        background: transparent !important;
+    }
+
+     
+    .main {
+        background: #fef9f6 !important;
+    }
+
+     
+    .post-entry {
+        background: rgba(255, 255, 255, 0.3) !important;
+        border: 1px solid rgba(42, 36, 36, 0.08) !important;
+        border-radius: 8px !important;
+        margin-bottom: 2rem !important;
+        padding: 1.5rem !important;
+    }
+
+    .post-entry:hover {
+        background: rgba(255, 255, 255, 0.5) !important;
+        border-color: rgba(42, 36, 36, 0.12) !important;
+    }
+
+     
+    .entry-header h2 {
+        font-size: 1.5rem !important;
+        font-weight: 500 !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+     
+    a {
+        color: #2A2424 !important;
+        text-decoration: none !important;
+    }
+
+    a:hover {
+        color: #666 !important;
+        text-decoration: underline !important;
+    }
+
+     
+    .footer {
+        background: #fef9f6 !important;
+        border-top: 1px solid rgba(42, 36, 36, 0.08) !important;
+        color: #666 !important;
+    }
+
+     
+    .theme-toggle, .lang-switch, .search-button {
+        background: transparent !important;
+        border: none !important;
+        color: #2A2424 !important;
+    }
+
+     
+    .social-icons a {
+        background: rgba(42, 36, 36, 0.05) !important;
+        color: #2A2424 !important;
+    }
+
+    .social-icons a:hover {
+        background: rgba(42, 36, 36, 0.1) !important;
+    }
+</style>
+</head>
+
+<body class="" id="top">
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="小葉隨筆 (Alt + H)">小葉隨筆</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/posts/" title="文章">
+                    <span>文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="標籤">
+                    <span>標籤</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+    <header class="post-header">
+        
+        <h1 class="post-title entry-hint-parent">
+            談 Clean Architecture 的實作（一）
+        </h1>
+    </header> 
+    <div class="post-content"><p>Uncle Bob 的 Clean 三部曲（《Clean Code》 / 《Clean Coder》 / 《Clean
+Architecture》）自從問世後，一直是各種軟體社群或是讀書會常見的內容。對於這三本書，我個人簡短的心得是：《Clean Code》
+講述在軟體實作時，怎樣的好習慣及作法，會讓撰寫出來的程式碼易於維護。《Clean Coder》 則是在探討，在時程、預算或是其他隕石的壓力之下，身為一位有著
+Clean Code 思維的工程師要怎麼應對進退，以達到程式還是 Clean Code 的目的。</p>
+<p>相較於第三本 《Clean Architecture》，前兩本書有著比較多的程式碼範例及舉例，而 《Clean Architecture》
+則是在闡述軟體的各種邊界，針對不同的邊界配合 S.O.L.I.D. 原則，達成一個易擴展、修改、測試及易讀易懂的架構，也就是所謂的 Clean
+Architecture。也由於邊界的界定與工程師的抽象能力、品味、domain know-how 等息息相關，所以在這本書中 Uncle Bob
+幾乎沒有提供較實際的例子可以讓讀者參考。</p>
+<p>當初會想要引入 Clean Architecture (CA) 進團隊內，是因為一個有極大時程壓力的專案。我們舊的架構沒辦法在許多外部系統的介面、DB
+schema 還沒確定之下，就進入商業邏輯的開發，進而導致無法在時程內完成。而 Uncle Bob
+在書中反覆提到的「先實作商業邏輯，盡量延遲決定實作細節」的概念在當時跳入我的腦中：外部系統的介面，就是所謂「實作細節」的一種。若我們能導入
+CA，就可以在外部系統一邊還在討論的情況下，進入商業邏輯的開發及針對其做單元測試。如此原本看似有時序關係的開發，就可以拆成平行處理，大幅縮短開發時程。</p>
+<p>由於書中對於如何創建這樣的架構沒有著墨，當時在 github 找了幾個別人的模版並做了一些自己的調整後，大約兩天內就針對我們的某個 use case
+寫了一個 prototype 來。後來藉由這個專案，我們團隊實際使用 CA 寫了六個 use
+case，並把所有外部依賴的實作都推遲到所有討論都穩定後才進行開發，減少了實作到一半又要修改的機會。同時在時限內，也沒有犧牲掉程式品質，測試涵蓋率達到了
+85% 以上。</p>
+<p>因為不依賴於真正的實作，所以我們可以在開發中期 DB Schema 還沒完全決定時，就先用簡單幾行程式去模擬真實 DB
+的行為，讓我們的使用者在開發中期使用我們的 API 時像是真實的 API 一樣，所有的商業邏輯都是正確能使用的，不是只是靜態的 mock
+response。當後期 DB schema
+決定後，抽換後面的實作及塞進相同的假資料，轉換的過程使用者完全不會感受到有什麼不同。同時寫出來的測試也自然不會依賴於實作，測試自然就能對抗
+refactoring ，使得後期串接上真的實作時，也不需要修改已有的測試，而只是要新增對於實作的測試而已。整個開發過程沒有「白工」，頗符合 Open-
+Closed 原則 XD。</p>
+<p>另一個好處是，這個架構有簡單的開發原則，除卻邊界應該要怎麼界定之外（這仰賴 team 內的討論），如何
+import，什麼樣的物件應該放在哪裡，都有更為明確的定義，讓每個團隊成員在 code review 的階段就能很容易地且客觀地看出是否有大問題，也大幅減少
+new hire / newbie 的進入障礙及失誤。</p>
+<p>這個系列還不確定會寫幾篇，不過預期是要針對一個簡單的 use case ，以實際的程式碼來說明我的 CA 實作中 (Java)，package
+的管理方式、組件依賴方向的原則是什麼，以及示範如何簡單的抽換實作及測試。期望這樣的內容可以讓還未了解 CA
+的做法及好處的同行們能夠將這樣的概念用在自己的專案中，讓未來開發的日子更加愉快！</p>
+<p>(To be continued…)</p>
+<h3 id="分享">分享:<a hidden class="anchor" aria-hidden="true" href="#分享">#</a></h3>
+<ul>
+<li><a href="https://yehzu.net/2022/04/09/%e8%ab%87-clean-architecture-%e7%9a%84%e5%af%a6%e4%bd%9c%ef%bc%88%e4%b8%80%ef%bc%89/?share=facebook"> 按一下以分享至 Facebook(在新視窗中開啟) Facebook </a></li>
+<li><a href="https://yehzu.net/2022/04/09/%e8%ab%87-clean-architecture-%e7%9a%84%e5%af%a6%e4%bd%9c%ef%bc%88%e4%b8%80%ef%bc%89/?share=linkedin"> 分享到 LinkedIn(在新視窗中開啟) LinkedIn </a></li>
+<li><a href="https://yehzu.net/2022/04/09/%e8%ab%87-clean-architecture-%e7%9a%84%e5%af%a6%e4%bd%9c%ef%bc%88%e4%b8%80%ef%bc%89/?share=twitter"> 按一下即可分享至 X(在新視窗中開啟) X </a></li>
+<li></li>
+</ul>
+<p>喜歡 正在載入&hellip;</p>
+<h3 id="相關"><em>相關</em><a hidden class="anchor" aria-hidden="true" href="#相關">#</a></h3>
+
+
+    </div>
+
+    <footer class="post-footer">
+        <ul class="post-tags">
+            <li><a href="http://localhost:1313/tags/ca/">CA</a></li>
+            <li><a href="http://localhost:1313/tags/development/"></a></li>
+            <li><a href="http://localhost:1313/tags/agile-zh/"></a></li>
+        </ul>
+    </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="http://localhost:1313/">小葉隨筆</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+</body>
+
+</html>

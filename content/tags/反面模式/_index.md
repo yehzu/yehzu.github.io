@@ -1,0 +1,3 @@
+---
+url: tags/anti-patterns/
+---
