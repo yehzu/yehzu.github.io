@@ -11,7 +11,7 @@
 masterpiece 且剛好看得懂），會被記住的都是那些難懂的程式碼。所以這篇就來談談也是很常見的「共用」程式碼議題。">
 <meta name="author" content="yehzu">
 <link rel="canonical" href="http://localhost:1313/posts/2022-04-30-4/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.1b2db803677037abd035b79fdabd6c4febb46fbc1fbba88e13d29fd4b70db39d.css" integrity="sha256-Gy24A2dwN6vQNbef2r1sT&#43;u0b7wfu6iOE9Kf1LcNs50=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.9646caad51b1b4341c5047d87fc06f5cff3f12ecb70584b23ddbb06c4a1b649e.css" integrity="sha256-lkbKrVGxtDQcUEfYf8BvXP8/Euy3BYSyPduwbEobZJ4=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -166,6 +166,24 @@ masterpiece 且剛好看得懂），會被記住的都是那些難懂的程式�
     body.list .main {
         max-width: 948px !important;
     }
+
+     
+    code {
+        background-color: #eee8d5 !important;
+        color: #dc322f !important;
+         
+        padding: 2px 4px !important;
+        border-radius: 4px !important;
+        font-family: 'Menlo', 'Monaco', 'Courier New', monospace !important;
+    }
+
+     
+    pre code {
+        background-color: transparent !important;
+        color: inherit !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+    }
 </style>
 </head>
 
@@ -203,21 +221,20 @@ masterpiece 且剛好看得懂），會被記住的都是那些難懂的程式�
     <div class="post-content"><p>繼上一篇淺談程式可讀性，我發覺，與其去談怎麼樣變成一個軟體工程大師，倒不如談談怎樣不要寫出雷雷的東西，比較容易也比較不會有什麼大爭議。軟體工程對於大師還是有不同的層次與見解，滿難去定義的，但是日常維護程式的痛，大家的經驗應該都滿類似的。畢竟，遇到好的或是普通的程式通常不會有什麼特別的感覺（除非是真的遇到
 masterpiece 且剛好看得懂），會被記住的都是那些難懂的程式碼。所以這篇就來談談也是很常見的「共用」程式碼議題。</p>
 <p>每個工程師從開始學程式，到進入職場實戰，一定都有聽過程式碼要盡量能夠共用，才不會一樣的事情需要重複做。嚴格來說，這個概念從一開始學習函式時，就已經烙印在每個工程師的腦中了，舉一個簡單的例子：</p>
-<pre><code>public static void main(String[] args) {
-  // 把 fibonacci sequence 的生成寫成函式以避免使用時都要重寫一遍
-  IntStream.range(1, 11)
-    .forEach(n -&gt; {
-      System.out.println(String.format(&quot;fib(%d) = %d &quot;, n, fibSeq(n)));
-    });
-}
-
-public static int fibSeq(int n) throws IllegalArgumentException {
-  if (n &lt; 0) throw new IllegalArgumentException(&quot;n should be greater or equal to 0&quot;);
-  else if (n == 0 || n == 1) return 1;
-  else return fibSeq(n-1) + fibSeq(n-2);
-}
-</code></pre>
-<p>程式碼重複利用，絕對是軟體工程裡非常重要的一件事。它可以大幅增加生產力，以及降低錯誤的發生率，就算中間有
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c1">// 把 fibonacci sequence 的生成寫成函式以避免使用時都要重寫一遍</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">IntStream</span><span class="p">.</span><span class="na">range</span><span class="p">(</span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">11</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">&#34;fib(%d) = %d &#34;</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">fibSeq</span><span class="p">(</span><span class="n">n</span><span class="p">)));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">fibSeq</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">&#34;n should be greater or equal to 0&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">fibSeq</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fibSeq</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>程式碼重複利用，絕對是軟體工程裡非常重要的一件事。它可以大幅增加生產力，以及降低錯誤的發生率，就算中間有
 bug，也很容易在修改一個地方之後，其他有使用到這個函式的地方也一併修好了。而學完函式，進入物件導向的世界後，消除重複程式碼的工具又多了不少種，像是繼承或泛型都是常用的手段，而最易「入手」的就是繼承。由於物件導向是以物件為主，「繼承」如此自然、好聯想、且容易在原有程式下擴充的特性，讓非常多工程師想優先透過繼承的手法來共用程式碼片段。但錯誤地共用程式，往往會造成後續維護的大問題。主要的原因有以下幾個：</p>
 <ol>
 <li>不太像的東西硬要共用</li>
@@ -230,37 +247,35 @@ bug，也很容易在修改一個地方之後，其他有使用到這個函式�
 <p>這的確是實務上常出現的情況哦！有些工程師太想要達成「共用」，就算兩段程式看起來只有 30%
 的相似，也還是要把他們抽出成一個函式。畢竟，只要函式的參數夠多，再怎麼樣不能共用的東西，也能抽成一個函式呀！於是，很可能可以看到這種程式碼（是個很不 ok
 的例子）：</p>
-<pre><code>private String getQuery(String target, String condition, int returnCnt) {
-  // 為了你的程式安全著想，實務上千萬別這樣寫 SQL 去 query DB...這只是範例
-  return String.format(&quot;SELECT * FROM %s WHERE %s LIMIT %d;&quot;, target, condition, returnCnt);
-}
-
-// 使用的時候…
-public String getAdultsQuery() {
-  return getQuery(&quot;users&quot;, &quot;age &gt;= 18&quot;, 10);
-}
-
-public String getComicBooksQuery() {
-  return getQuery(&quot;books&quot;, &quot;type = \&quot;comics\&quot;&quot;, 10);
-}
-</code></pre>
-<p>這樣的共用方式，會導致 <code>getAdultsQuery</code> 和 <code>getComicBooksQuery</code> 兩個東西被 couple 在一起，當今天
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getQuery</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">condition</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">returnCnt</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c1">// 為了你的程式安全著想，實務上千萬別這樣寫 SQL 去 query DB...這只是範例</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">&#34;SELECT * FROM %s WHERE %s LIMIT %d;&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">condition</span><span class="p">,</span><span class="w"> </span><span class="n">returnCnt</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 使用的時候…</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getAdultsQuery</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">getQuery</span><span class="p">(</span><span class="s">&#34;users&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;age &gt;= 18&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">10</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getComicBooksQuery</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">getQuery</span><span class="p">(</span><span class="s">&#34;books&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;type = \&#34;comics\&#34;&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">10</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>這樣的共用方式，會導致 <code>getAdultsQuery</code> 和 <code>getComicBooksQuery</code> 兩個東西被 couple 在一起，當今天
 <code>getAdultsQuery</code>
 不需要撈回全部欄位的時候，這個共用函式只有兩條路：一是修改這個函式需要帶的參數，另一個就是沒辦法再共用這個函式。假設選擇了前面修改參數這條路，那麼程式會變成這樣：</p>
-<pre><code>private String getQuery(String columns, String target, String condition, int returnCnt) {
-  return String.format(&quot;SELECT %s FROM %s WHERE %s LIMIT %d;&quot;, columns, target, condition, returnCnt);
-}
-
-// 使用的時候…
-public String getAdultsQuery() {
-  return getQuery(&quot;name, age&quot;, &quot;users&quot;, &quot;age &gt;= 18&quot;, 10);
-}
-
-public String getComicBooksQuery() {
-  return getQuery(&quot;*&quot;, &quot;books&quot;, &quot;type = \&quot;comics\&quot;&quot;, 10);
-}
-</code></pre>
-<p>變成這樣，其實也沒有真的共用什麼東西了，反而讓程式碼變得難以閱讀及維護。針對這一點，當抽出的共用函式的參數太多且彼此間關聯很薄弱的時候，就要有所警覺：是否這兩段程式碼不該共用？</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getQuery</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">columns</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">condition</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">returnCnt</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">&#34;SELECT %s FROM %s WHERE %s LIMIT %d;&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">columns</span><span class="p">,</span><span class="w"> </span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">condition</span><span class="p">,</span><span class="w"> </span><span class="n">returnCnt</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// 使用的時候…</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getAdultsQuery</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">getQuery</span><span class="p">(</span><span class="s">&#34;name, age&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;users&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;age &gt;= 18&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">10</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getComicBooksQuery</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">getQuery</span><span class="p">(</span><span class="s">&#34;*&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;books&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;type = \&#34;comics\&#34;&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">10</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>變成這樣，其實也沒有真的共用什麼東西了，反而讓程式碼變得難以閱讀及維護。針對這一點，當抽出的共用函式的參數太多且彼此間關聯很薄弱的時候，就要有所警覺：是否這兩段程式碼不該共用？</p>
 <h2 id="看到很像的東西就想共用">看到很像的東西就想共用<a hidden class="anchor" aria-hidden="true" href="#看到很像的東西就想共用">#</a></h2>
 <p>很像的東西，不就可以抽成共用嗎？這可就大錯特錯了。有的時候，就算長得一模一樣，也未必是應該要抽成共用的。能不能共用，要看的是這個行為的「意圖」是否是一樣的，若只是剛好長得一樣而意圖不同，那只要其中一邊稍有調整，這段程式碼立刻就又會分道揚鑣。</p>
 <p>這邊舉個例子，某線上商城的會員制度分為「一般會員」及「VIP 會員」，若今天不同資格的訂定方式有兩種：</p>
@@ -288,46 +303,44 @@ Rectangle 算面積作為範例，而這樣簡單的範例就已和一般直覺�
 <p>但更多時候，很多工程師連想到要去思考這個關係都沒有，單純只是想要「共用」。一個常見的利用繼承共用的例子如下：原本有一個 Controller 會先用
 user ID 取出其 User 的 meta 資料，再拿出他追蹤的前十個使用者資料。新的需求是要有一個新的 Controller ，先用 user ID
 取出其 User 的 meta 資料，再拿出他按讚的貼文。原本的程式可能長得像這樣：</p>
-<pre><code>public class FollowedUserController {  
-  public UserMetaRepo userMetaRepo; // assigned in the constructor
-  public UserRepo userRepo; // assigned in the constructor
-
-  public List&lt;User&gt; getFollowedUsers(String userId) {
-    return userMetaRepo.getFollowedUserIds(userId).stream()
-      .map(userRepo::getUser)
-      .collect(toList());
-  }
-}
-</code></pre>
-<p>新的需求，在前半段基本上是一樣的！都是要先去用 user ID 拿回 user meta，所以就有一種改法會是長這個樣子：</p>
-<pre><code>public class UserMetaController {
-  private UserMetaRepo userMetaRepo; // assigned in the constructor
-  protected List&lt;UserMeta&gt; getUserMeta(String id) {
-    return userMetaRepo.getFollowedUserIds(id);
-  } 
-}
-
-public class FollowedUserController extends UserMetaController {  
-  public UserRepo userRepo; // asigned in the constructor
-
-  public List&lt;User&gt; getFollowedUsers(String id) {
-    return getUserMeta(id).stream()
-      .map(userRepo::getUser)
-      .collect(toList());
-  }
-}
-
-public class LikedPostController extends UserMetaController {  
-  public PostRepo postRepo; // asigned in the constructor
-
-  public List&lt;Post&gt; getLikedPosts(String id) {
-    return getUserMeta(id).stream()
-      .map(postRepo::getLikedPost)
-      .collect(toList());
-  }
-}
-</code></pre>
-<p>可以看到，<code>FollowedUserController</code> 和 <code>LikedPostController</code> 在概念上完全不同的東西，因為「實作」的相似而透過
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FollowedUserController</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">UserMetaRepo</span><span class="w"> </span><span class="n">userMetaRepo</span><span class="p">;</span><span class="w"> </span><span class="c1">// assigned in the constructor</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">UserRepo</span><span class="w"> </span><span class="n">userRepo</span><span class="p">;</span><span class="w"> </span><span class="c1">// assigned in the constructor</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getFollowedUsers</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">userMetaRepo</span><span class="p">.</span><span class="na">getFollowedUserIds</span><span class="p">(</span><span class="n">userId</span><span class="p">).</span><span class="na">stream</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">userRepo</span><span class="p">::</span><span class="n">getUser</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">.</span><span class="na">collect</span><span class="p">(</span><span class="n">toList</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>新的需求，在前半段基本上是一樣的！都是要先去用 user ID 拿回 user meta，所以就有一種改法會是長這個樣子：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserMetaController</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="n">UserMetaRepo</span><span class="w"> </span><span class="n">userMetaRepo</span><span class="p">;</span><span class="w"> </span><span class="c1">// assigned in the constructor</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">protected</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">UserMeta</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getUserMeta</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">userMetaRepo</span><span class="p">.</span><span class="na">getFollowedUserIds</span><span class="p">(</span><span class="n">id</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FollowedUserController</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">UserMetaController</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">UserRepo</span><span class="w"> </span><span class="n">userRepo</span><span class="p">;</span><span class="w"> </span><span class="c1">// asigned in the constructor</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getFollowedUsers</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">getUserMeta</span><span class="p">(</span><span class="n">id</span><span class="p">).</span><span class="na">stream</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">userRepo</span><span class="p">::</span><span class="n">getUser</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">.</span><span class="na">collect</span><span class="p">(</span><span class="n">toList</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">LikedPostController</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">UserMetaController</span><span class="w"> </span><span class="p">{</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">PostRepo</span><span class="w"> </span><span class="n">postRepo</span><span class="p">;</span><span class="w"> </span><span class="c1">// asigned in the constructor</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Post</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getLikedPosts</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">getUserMeta</span><span class="p">(</span><span class="n">id</span><span class="p">).</span><span class="na">stream</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">postRepo</span><span class="p">::</span><span class="n">getLikedPost</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">.</span><span class="na">collect</span><span class="p">(</span><span class="n">toList</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>可以看到，<code>FollowedUserController</code> 和 <code>LikedPostController</code> 在概念上完全不同的東西，因為「實作」的相似而透過
 <code>UserMetaController</code> 被藕合在一起了。這產生了兩個問題：</p>
 <ul>
 <li>一個還未爬完整個 code base 的人，會無法了解為什麼 <code>UserMetaController</code> 和 <code>FollowedUserController/LikedPostController</code> 有什麼關係？而這個繼承關係也並不直覺。</li>
@@ -341,27 +354,26 @@ Utility Class 比較好。</p>
 <code>getAdultsQuery</code> 和 <code>getComicBooksQuery</code> 的實作」轉變成「共用產生 SQL Query
 的工具」，這樣會抽取的共用程式碼目的及擺放的位置都會不同（很自然地就不會把他放在一個 XXXXBase 的父類別裡），比如可以產生一個 fluent
 query builder library 來讓程式碼易用：</p>
-<pre><code>class class SQLQueryBuilder {
-  // impl.
-}
-
-public String getAdultsQuery() {
-  return qb.select(&quot;name&quot;, &quot;age&quot;)
-    .from(&quot;users&quot;)
-    .where(&quot;age&quot;).ge(18)
-    .limit(10)
-    .build();
-}
-
-public String getComicBooksQuery() {
-  return qb.select(&quot;*&quot;)
-    .from(&quot;books&quot;)
-    .where(&quot;type&quot;).eq(&quot;comics&quot;)
-    .limit(10)
-    .build();
-}
-</code></pre>
-<p>以上幾種常見的共用誤區你有沒有踩到呢？下次打算要重構抽取共用程式碼時，可以停下來多想想，避免寫出之後很難改動的共用程式！</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">class</span><span class="w"> </span><span class="n">SQLQueryBuilder</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c1">// impl.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getAdultsQuery</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">qb</span><span class="p">.</span><span class="na">select</span><span class="p">(</span><span class="s">&#34;name&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;age&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="na">from</span><span class="p">(</span><span class="s">&#34;users&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="na">where</span><span class="p">(</span><span class="s">&#34;age&#34;</span><span class="p">).</span><span class="na">ge</span><span class="p">(</span><span class="n">18</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="na">limit</span><span class="p">(</span><span class="n">10</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getComicBooksQuery</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">qb</span><span class="p">.</span><span class="na">select</span><span class="p">(</span><span class="s">&#34;*&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="na">from</span><span class="p">(</span><span class="s">&#34;books&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="na">where</span><span class="p">(</span><span class="s">&#34;type&#34;</span><span class="p">).</span><span class="na">eq</span><span class="p">(</span><span class="s">&#34;comics&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="na">limit</span><span class="p">(</span><span class="n">10</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>以上幾種常見的共用誤區你有沒有踩到呢？下次打算要重構抽取共用程式碼時，可以停下來多想想，避免寫出之後很難改動的共用程式！</p>
 
 
     </div>

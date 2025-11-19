@@ -5,6 +5,14 @@ theme = "PaperMod"
 hasCJKLanguage = true
 preserveTaxonomyNames = true
 
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = false
+    noClasses = false
+    style = "solarized-light"
+
 [params]
     defaultTheme = "light"
     disableThemeToggle = true

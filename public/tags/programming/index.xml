@@ -38,65 +38,62 @@ function，先拋開已知的任何前提，單純地去看我是否能夠用這
 <h3 id="想像在寫書的目錄">想像在寫書的目錄</h3>
 <p>我在讀書時會先掃過書的目錄，他是整本書的大綱及架構，有了這個概念再去讀書，就比較能了解作者寫作的安排。程式碼也是一樣的。一段程式碼片段，就像在寫書的目錄一樣，讓人快速掃過之後，就可以有大概的了解。而要知道細節，就要再往下一層去探索。</p>
 <p>這邊用一個簡單的例子來表達這個概念，大家可以先看這段程式碼，並試圖理解這段程式的作用：</p>
-<pre><code>public User getUser(String userId) {
-  var user = getFromCache(userId);
-  if (user != null) {
-    return user;
-  } 
-
-  user = userRepo.getUser(userId);
-
-  setCache(userId, user);
-  return user;
-}
-</code></pre>
-<p>應該不難理解這就是用 <code>userId</code> 先嘗試從 cache 拿取 user，若 cache miss 則改從 db 拿取的一段程式碼。可以看到
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">getUser</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="kd">var</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getFromCache</span><span class="p">(</span><span class="n">userId</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">user</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">user</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userRepo</span><span class="p">.</span><span class="na">getUser</span><span class="p">(</span><span class="n">userId</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">setCache</span><span class="p">(</span><span class="n">userId</span><span class="p">,</span><span class="w"> </span><span class="n">user</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">user</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w"> 
+</span></span></span></code></pre></div><p>應該不難理解這就是用 <code>userId</code> 先嘗試從 cache 拿取 user，若 cache miss 則改從 db 拿取的一段程式碼。可以看到
 <code>getFromCache / setCache</code> 是在相同的抽象層級，如此會讓程式碼容易閱讀，那怎麼樣是不同的抽象層級呢？</p>
-<pre><code>public User getUser(String userId) {
-  var userCacheKey = &quot;userEntity:&quot; + userId;
-  var user = null;  
-  try {
-    user = cache.get(userCacheKey);
-  } catch (CacheMissException cme) {
-    log.debug(&quot;cache miss, userId = {}&quot;, userId);
-  }
-
-  if (user != null) {
-    return user;
-  }
-
-  user = userRepo.getUser(userId);
-  setCache(userId, user);
-  return user;
-}
-</code></pre>
-<p>這段程式碼把原先的包在 <code>getFromCache</code> 的實作細節放在 <code>getUser</code> 這個層次，和 <code>L15</code> 的 <code>setCache</code>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">getUser</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="kd">var</span><span class="w"> </span><span class="n">userCacheKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;userEntity:&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">userId</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="kd">var</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cache</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">userCacheKey</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">CacheMissException</span><span class="w"> </span><span class="n">cme</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">log</span><span class="p">.</span><span class="na">debug</span><span class="p">(</span><span class="s">&#34;cache miss, userId = {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">userId</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">user</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">user</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userRepo</span><span class="p">.</span><span class="na">getUser</span><span class="p">(</span><span class="n">userId</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">setCache</span><span class="p">(</span><span class="n">userId</span><span class="p">,</span><span class="w"> </span><span class="n">user</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">user</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>這段程式碼把原先的包在 <code>getFromCache</code> 的實作細節放在 <code>getUser</code> 這個層次，和 <code>L15</code> 的 <code>setCache</code>
 是不同的抽象層級，這樣的程式碼反而比把下面全部實作都曝露在外的程式碼還要難以閱讀；因為想要 high-level
 地了解這段程式在做什麼也不行，想要直接看到全部的細節也不行。</p>
-<pre><code>public User getUser(String userId) {
-  var userCacheKey = &quot;userEntity:&quot; + userId;
-  var user = null;  
-  try {
-    user = cache.get(userCacheKey);
-  } catch (CacheMissException cme) {
-    log.debug(&quot;cache miss, userId = {}&quot;, userId);
-  }
-
-  if (user != null) {
-    return user;
-  }
-
-  user = userRepo.getUser(userId);
-
-  try {
-    cache.set(userCacheKey, user);
-  } catch (Exception e) {
-    log.debug(&quot;cache failed, userId = {}&quot;, userId);
-  }
-  return user;
-}
-</code></pre>
-<p>實務上這種抽象程度不一致的情況履見不鮮，幾種可能：一是當時撰寫的工程式抽象功力不足，導致上下的抽象程度不對稱。但更可能的是，有一位工程師在修改下段
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">getUser</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="kd">var</span><span class="w"> </span><span class="n">userCacheKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;userEntity:&#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">userId</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="kd">var</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cache</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">userCacheKey</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">CacheMissException</span><span class="w"> </span><span class="n">cme</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">log</span><span class="p">.</span><span class="na">debug</span><span class="p">(</span><span class="s">&#34;cache miss, userId = {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">userId</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">user</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">user</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userRepo</span><span class="p">.</span><span class="na">getUser</span><span class="p">(</span><span class="n">userId</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">cache</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">userCacheKey</span><span class="p">,</span><span class="w"> </span><span class="n">user</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">log</span><span class="p">.</span><span class="na">debug</span><span class="p">(</span><span class="s">&#34;cache failed, userId = {}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">userId</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">user</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>實務上這種抽象程度不一致的情況履見不鮮，幾種可能：一是當時撰寫的工程式抽象功力不足，導致上下的抽象程度不對稱。但更可能的是，有一位工程師在修改下段
 <code>setCache</code> 的例外處理時，覺得應該要以 method 將這段包起來，於是把整個 try-catch block 抽出去成
 <code>setCache</code>，卻沒發現上面也應該要一起抽出去。在這麼小的一段程式碼大家可能會覺得「怎麼可能只抽下段不抽上段的 cache
 code」，但若是複雜一點的情況，或是原本的介面有點難處理時，有些工程師可能就只會「改一半」，老實說，我會認為要嘛整個改好，要嘛寧可不要改。</p>
@@ -113,37 +110,36 @@ workaround。當然，這必然要在版本控制中交代清楚，但能在程�
 <p>怎麼會如此？舉個比較極端的例子，一個才剛學會 if-else 的新手，因為對於程式的抽象功能還不了解，不可能會看得懂依照 Clean
 Architecture 寫出來的程式，反而義大利麵程式碼比較適合他。以剛才 <code>getUser</code>
 的例子，若換成以下兩種寫法，你對於他們可讀性的評分是怎麼樣呢？</p>
-<pre><code>@Cached
-public User getUser(String userId) {
-  return userRepo.getUser(userId);
-}
-
-
-
-// UserController.java
-interface UserController {
-  User getUser(String userId);
-}
-
-// UserControllerImpl.java
-public User getUser(String userId) {
-  return userRepo.getUser(userId);
-}
-
-// CachedUserController.java
-public User getUser(String userId) {
-  var user = getFromCache(userId);
-  if (user != null) {
-    return user;
-  }
-
-  user = userController.getUser(userId);
-
-  setCache(userId, user);
-  return user;
-}
-</code></pre>
-<p>這兩種方式都是能讓程式達到 Open-Closed Principle 的常見手法。第一段程式是用 Aspect-oriented programming
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Cached</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">getUser</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">userRepo</span><span class="p">.</span><span class="na">getUser</span><span class="p">(</span><span class="n">userId</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// UserController.java</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">interface</span> <span class="nc">UserController</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">User</span><span class="w"> </span><span class="nf">getUser</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">userId</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// UserControllerImpl.java</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">getUser</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">userRepo</span><span class="p">.</span><span class="na">getUser</span><span class="p">(</span><span class="n">userId</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// CachedUserController.java</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">getUser</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="kd">var</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getFromCache</span><span class="p">(</span><span class="n">userId</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">user</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">user</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userController</span><span class="p">.</span><span class="na">getUser</span><span class="p">(</span><span class="n">userId</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">setCache</span><span class="p">(</span><span class="n">userId</span><span class="p">,</span><span class="w"> </span><span class="n">user</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">user</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>這兩種方式都是能讓程式達到 Open-Closed Principle 的常見手法。第一段程式是用 Aspect-oriented programming
 (AOP) 的方式將 cache 存取邏輯包在實際向 db 存取 <code>user</code> 之外，但對於這不了解 AOP
 的工程師來說，這簡直不可思議，甚至會覺得把這種東西藏在裡面到底在搞什麼鬼。可是對於有 AOP
 經驗的工程師來說，這是很自然也合理的做法，也讓真正的業務邏輯不會被淹沒在 cache
