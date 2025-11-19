@@ -34,7 +34,7 @@ hasCJKLanguage = true
 
     [params.homeInfoParams]
         Title = "小葉隨筆"
-        Content = "分享程式開發心得、讀書筆記與生活思考"
+        Content = "Do or do not. There is no try."
 
     [[params.socialIcons]]
         name = "github"

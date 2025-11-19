@@ -4,26 +4,31 @@
 
 <style>
     :root {
-        --theme: light;
-        --primary: #2A2424;
-        --secondary: #666;
-        --tertiary: #fef9f6;
-        --content: #2A2424;
-        --hljs-bg: #f8f8f8;
-        --code-bg: rgba(42, 36, 36, 0.05);
-        --border: rgba(42, 36, 36, 0.08);
+        --theme: #fffdf5;
+        --primary: #2c2c2c;
+        --secondary: #586e75;
+        --tertiary: #eee8d5;
+        --content: #2c2c2c;
+        --hljs-bg: #eee8d5;
+        --code-bg: transparent;
+        --border: #eee8d5;
     }
 
     body {
-        background-color: #fef9f6 !important;
+        background-color: #fffdf5 !important;
         font-family: 'Noto Serif TC', Georgia, 'Times New Roman', Times, serif !important;
-        color: #2A2424 !important;
+        color: #2c2c2c !important;
         line-height: 1.7;
     }
 
     /* 標題樣式 */
-    h1, h2, h3, h4, h5, h6 {
-        color: #2A2424 !important;
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: #2c2c2c !important;
         font-family: 'Noto Serif TC', Georgia, serif !important;
     }
 
@@ -34,21 +39,22 @@
 
     /* 內容區域 */
     .main {
-        background: #fef9f6 !important;
+        background: transparent !important;
     }
 
     /* 文章列表 */
     .post-entry {
-        background: rgba(255, 255, 255, 0.3) !important;
-        border: 1px solid rgba(42, 36, 36, 0.08) !important;
-        border-radius: 8px !important;
+        background: transparent !important;
+        border: none !important;
+        border-bottom: 1px solid #eee8d5 !important;
+        border-radius: 0 !important;
         margin-bottom: 2rem !important;
-        padding: 1.5rem !important;
+        padding: 1.5rem 0 !important;
     }
 
     .post-entry:hover {
-        background: rgba(255, 255, 255, 0.5) !important;
-        border-color: rgba(42, 36, 36, 0.12) !important;
+        background: transparent !important;
+        border-color: #cb4b16 !important;
     }
 
     /* 文章標題 */
@@ -60,36 +66,58 @@
 
     /* 連結樣式 */
     a {
-        color: #2A2424 !important;
+        color: #268bd2 !important;
         text-decoration: none !important;
     }
 
     a:hover {
-        color: #666 !important;
+        color: #cb4b16 !important;
         text-decoration: underline !important;
     }
 
     /* 簡化頁面元素 */
     .footer {
-        background: #fef9f6 !important;
-        border-top: 1px solid rgba(42, 36, 36, 0.08) !important;
-        color: #666 !important;
+        background: transparent !important;
+        border-top: 1px solid #eee8d5 !important;
+        color: #93a1a1 !important;
     }
 
     /* 移除不必要的陰影和邊框 */
-    .theme-toggle, .lang-switch, .search-button {
+    .theme-toggle,
+    .lang-switch,
+    .search-button {
         background: transparent !important;
         border: none !important;
-        color: #2A2424 !important;
+        color: #2c2c2c !important;
     }
 
     /* 社交圖標樣式 */
     .social-icons a {
-        background: rgba(42, 36, 36, 0.05) !important;
-        color: #2A2424 !important;
+        background: transparent !important;
+        color: #333333 !important;
+        padding: 0 !important;
+        margin-right: 15px !important;
     }
 
     .social-icons a:hover {
-        background: rgba(42, 36, 36, 0.1) !important;
+        background: transparent !important;
+    }
+
+    .social-icons a svg {
+        fill: #333333 !important;
+        background: transparent !important;
+    }
+
+    /* Brand Colors on Hover */
+    .social-icons a[href*="github"]:hover svg {
+        fill: #4078c0 !important;
+    }
+
+    .social-icons a[href*="linkedin"]:hover svg {
+        fill: #0077b5 !important;
+    }
+
+    .social-icons a[href*="flickr"]:hover svg {
+        fill: #ff0084 !important;
     }
 </style>

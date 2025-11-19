@@ -10,7 +10,7 @@
 <meta name="description" content="There is no try.">
 <meta name="author" content="yehzu">
 <link rel="canonical" href="http://localhost:1313/tags/the-power-of-output/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.f608f704390d768ebdd94b11f04a9fb19a7a673792c46355607351de2be783ff.css" integrity="sha256-9gj3BDkNdo692UsR8EqfsZp6ZzeSxGNVYHNR3ivng/8=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.1b2db803677037abd035b79fdabd6c4febb46fbc1fbba88e13d29fd4b70db39d.css" integrity="sha256-Gy24A2dwN6vQNbef2r1sT&#43;u0b7wfu6iOE9Kf1LcNs50=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -34,26 +34,31 @@
 
 <style>
     :root {
-        --theme: light;
-        --primary: #2A2424;
-        --secondary: #666;
-        --tertiary: #fef9f6;
-        --content: #2A2424;
-        --hljs-bg: #f8f8f8;
-        --code-bg: rgba(42, 36, 36, 0.05);
-        --border: rgba(42, 36, 36, 0.08);
+        --theme: #fffdf5;
+        --primary: #2c2c2c;
+        --secondary: #586e75;
+        --tertiary: #eee8d5;
+        --content: #2c2c2c;
+        --hljs-bg: #eee8d5;
+        --code-bg: transparent;
+        --border: #eee8d5;
     }
 
     body {
-        background-color: #fef9f6 !important;
+        background-color: #fffdf5 !important;
         font-family: 'Noto Serif TC', Georgia, 'Times New Roman', Times, serif !important;
-        color: #2A2424 !important;
+        color: #2c2c2c !important;
         line-height: 1.7;
     }
 
      
-    h1, h2, h3, h4, h5, h6 {
-        color: #2A2424 !important;
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: #2c2c2c !important;
         font-family: 'Noto Serif TC', Georgia, serif !important;
     }
 
@@ -64,21 +69,22 @@
 
      
     .main {
-        background: #fef9f6 !important;
+        background: transparent !important;
     }
 
      
     .post-entry {
-        background: rgba(255, 255, 255, 0.3) !important;
-        border: 1px solid rgba(42, 36, 36, 0.08) !important;
-        border-radius: 8px !important;
+        background: transparent !important;
+        border: none !important;
+        border-bottom: 1px solid #eee8d5 !important;
+        border-radius: 0 !important;
         margin-bottom: 2rem !important;
-        padding: 1.5rem !important;
+        padding: 1.5rem 0 !important;
     }
 
     .post-entry:hover {
-        background: rgba(255, 255, 255, 0.5) !important;
-        border-color: rgba(42, 36, 36, 0.12) !important;
+        background: transparent !important;
+        border-color: #cb4b16 !important;
     }
 
      
@@ -90,37 +96,59 @@
 
      
     a {
-        color: #2A2424 !important;
+        color: #268bd2 !important;
         text-decoration: none !important;
     }
 
     a:hover {
-        color: #666 !important;
+        color: #cb4b16 !important;
         text-decoration: underline !important;
     }
 
      
     .footer {
-        background: #fef9f6 !important;
-        border-top: 1px solid rgba(42, 36, 36, 0.08) !important;
-        color: #666 !important;
+        background: transparent !important;
+        border-top: 1px solid #eee8d5 !important;
+        color: #93a1a1 !important;
     }
 
      
-    .theme-toggle, .lang-switch, .search-button {
+    .theme-toggle,
+    .lang-switch,
+    .search-button {
         background: transparent !important;
         border: none !important;
-        color: #2A2424 !important;
+        color: #2c2c2c !important;
     }
 
      
     .social-icons a {
-        background: rgba(42, 36, 36, 0.05) !important;
-        color: #2A2424 !important;
+        background: transparent !important;
+        color: #333333 !important;
+        padding: 0 !important;
+        margin-right: 15px !important;
     }
 
     .social-icons a:hover {
-        background: rgba(42, 36, 36, 0.1) !important;
+        background: transparent !important;
+    }
+
+    .social-icons a svg {
+        fill: #333333 !important;
+        background: transparent !important;
+    }
+
+     
+    .social-icons a[href*="github"]:hover svg {
+        fill: #4078c0 !important;
+    }
+
+    .social-icons a[href*="linkedin"]:hover svg {
+        fill: #0077b5 !important;
+    }
+
+    .social-icons a[href*="flickr"]:hover svg {
+        fill: #ff0084 !important;
     }
 </style>
 </head>

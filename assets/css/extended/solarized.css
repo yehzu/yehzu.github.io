@@ -18,19 +18,21 @@
     --solar-green: #859900;
 
     /* PaperMod Overrides */
-    --theme: #fdf6e3 !important;
-    /* Base3 - Cream Background */
-    --entry: #fdf6e3 !important;
-    --primary: #586e75 !important;
-    /* Base01 - Darker Body Text */
-    --secondary: #93a1a1 !important;
-    /* Base1 */
+    --theme: #fffdf5 !important;
+    /* Lighter Pale Yellow */
+    --entry: #fffdf5 !important;
+    --primary: #2c2c2c !important;
+    /* Dark Grey Body Text */
+    --secondary: #586e75 !important;
+    /* Base01 */
     --tertiary: #eee8d5 !important;
     /* Base2 */
-    --content: #586e75 !important;
-    /* Base01 - Darker Body Text */
+    --content: #2c2c2c !important;
+    /* Dark Grey Body Text */
     --hljs-bg: #eee8d5 !important;
     --code-block-bg: #eee8d5 !important;
+    --code-bg: transparent !important;
+    /* Fix for .list background */
     --border: #eee8d5 !important;
 
     /* Typography */
@@ -42,12 +44,12 @@
 /* Force Light Mode Colors even if system is dark */
 @media (prefers-color-scheme: dark) {
     :root {
-        --theme: #fdf6e3 !important;
-        --entry: #fdf6e3 !important;
-        --primary: #586e75 !important;
-        --secondary: #93a1a1 !important;
+        --theme: #fffdf5 !important;
+        --entry: #fffdf5 !important;
+        --primary: #2c2c2c !important;
+        --secondary: #586e75 !important;
         --tertiary: #eee8d5 !important;
-        --content: #586e75 !important;
+        --content: #2c2c2c !important;
         --hljs-bg: #eee8d5 !important;
         --code-block-bg: #eee8d5 !important;
         --border: #eee8d5 !important;
@@ -59,10 +61,10 @@ body {
     font-family: var(--font-family);
     font-size: var(--font-size);
     line-height: var(--line-height);
-    background-color: #fdf6e3 !important;
-    /* Explicit Cream */
-    color: #073642 !important;
-    /* Base02 - Darker Headings Color for Body Text too */
+    background-color: #fffdf5 !important;
+    /* Explicit Lighter Pale Yellow */
+    color: #2c2c2c !important;
+    /* Dark Grey */
 }
 
 h1,
@@ -71,8 +73,8 @@ h3,
 h4,
 h5,
 h6 {
-    color: #073642 !important;
-    /* Base02 - Darker Headings */
+    color: #2c2c2c !important;
+    /* Dark Grey Headings */
     font-weight: 700;
 }
 
@@ -88,7 +90,28 @@ a:hover {
     text-decoration: underline;
 }
 
+/* Ensure all main containers use the correct background or are transparent */
+main,
+.main,
+.list,
+.page-header,
+.first-entry,
+.post-entry,
+.post-header,
+.post-content,
+.post-footer,
+article,
+.entry-header,
+.entry-content,
+.entry-footer,
+.archive-entry,
+.archive-posts {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
 /* Minimalist Social Icons - No Box */
+.social-icons,
 .social-icons a,
 .social-icons a:hover,
 .social-icons a:visited,
@@ -105,21 +128,38 @@ a:hover {
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
+    border-radius: 0 !important;
 }
 
 .social-icons a svg {
-    fill: #586e75 !important;
-    /* Base01 */
+    fill: #333333 !important;
+    /* Dark Grey Default */
+    background: none !important;
+    background-color: transparent !important;
+    /* Ensure SVG has no background */
     transition: fill 0.3s;
     width: 24px;
     height: 24px;
     stroke: none !important;
     /* Ensure no stroke if fill is used */
+    box-shadow: none !important;
+    border: none !important;
 }
 
-.social-icons a:hover svg {
-    fill: #268bd2 !important;
-    /* Blue on hover */
+/* Specific Brand Colors on Hover */
+.social-icons a[href*="github"]:hover svg {
+    fill: #4078c0 !important;
+    /* Github Blue */
+}
+
+.social-icons a[href*="linkedin"]:hover svg {
+    fill: #0077b5 !important;
+    /* LinkedIn Blue */
+}
+
+.social-icons a[href*="flickr"]:hover svg {
+    fill: #ff0084 !important;
+    /* Flickr Pink */
 }
 
 /* Hide Theme Toggle if it exists */
@@ -130,6 +170,7 @@ a:hover {
 /* Override PaperMod's default line-clamp */
 .entry-content {
     -webkit-line-clamp: unset !important;
+    line-clamp: unset !important;
     overflow: visible !important;
     display: block !important;
 }
@@ -191,7 +232,7 @@ a:hover {
 
 /* Force content color to match title */
 .entry-content {
-    color: #073642 !important;
+    color: #2c2c2c !important;
     /* Match title color */
 }
 
