@@ -3,6 +3,7 @@ languageCode = "zh-tw"
 title = "小葉隨筆"
 theme = "PaperMod"
 hasCJKLanguage = true
+preserveTaxonomyNames = true
 
 [params]
     defaultTheme = "light"
