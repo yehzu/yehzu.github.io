@@ -177,15 +177,6 @@ public String getComicBooksQuery() {
 }
 </code></pre>
 <p>以上幾種常見的共用誤區你有沒有踩到呢？下次打算要重構抽取共用程式碼時，可以停下來多想想，避免寫出之後很難改動的共用程式！</p>
-<h3 id="分享">分享:</h3>
-<ul>
-<li><a href="https://yehzu.net/2022/04/30/%e7%a8%8b%e5%bc%8f%e7%a2%bc%e5%85%b1%e7%94%a8/?share=facebook"> 按一下以分享至 Facebook(在新視窗中開啟) Facebook </a></li>
-<li><a href="https://yehzu.net/2022/04/30/%e7%a8%8b%e5%bc%8f%e7%a2%bc%e5%85%b1%e7%94%a8/?share=linkedin"> 分享到 LinkedIn(在新視窗中開啟) LinkedIn </a></li>
-<li><a href="https://yehzu.net/2022/04/30/%e7%a8%8b%e5%bc%8f%e7%a2%bc%e5%85%b1%e7%94%a8/?share=twitter"> 按一下即可分享至 X(在新視窗中開啟) X </a></li>
-<li></li>
-</ul>
-<p>喜歡 正在載入&hellip;</p>
-<h3 id="相關"><em>相關</em></h3>
 ]]></content:encoded>
     </item>
   </channel>
