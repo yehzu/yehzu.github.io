@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>笛子翻譜 · 五線譜 → 首調簡譜</title>
+<meta name="description" content="指定調性、挑一支中國笛，得到整條音域的對照表：每個五線譜音的首調數字、實際音高，以及該用的筒音指法。">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Lora:wght@400;600&family=Noto+Serif+TC:wght@300;400;500;600&display=swap">
+<style>
+/* ── Classical design-system tokens ───────────────────────────────────── */
+:root {
+  --color-bg: #f3f2f2;
+  --color-surface: #eae9e9;
+  --color-text: #201f1d;
+  --color-accent: #b68235;
+  --color-divider: color-mix(in srgb, #201f1d 16%, transparent);
+
+  --color-accent-100: #fff3e4;
+  --color-accent-400: #e1ad66;
+  --color-accent-700: #7d5411;
+  --color-accent-800: #5a3b0a;
+
+  --font-heading: "Cormorant Garamond", system-ui, sans-serif;
+  --font-heading-weight: 600;
+  --font-body: "Lora", system-ui, sans-serif;
+
+  --space-1: 4.6px;
+  --space-2: 9.2px;
+  --space-3: 13.8px;
+  --space-4: 18.4px;
+  --space-6: 27.6px;
+  --space-8: 36.8px;
+
+  --radius-md: 4px;
+  --radius-lg: 7px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--color-bg); color: var(--color-text);
+  font-family: "Lora", "Noto Serif TC", Georgia, serif;
+  font-size: 15px; line-height: 1.55; font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Cormorant Garamond", "Noto Serif TC", Georgia, serif;
+  font-weight: var(--font-heading-weight);
+  line-height: 1.12; letter-spacing: -0.015em; margin: 0 0 var(--space-2);
+}
+a { color: var(--color-accent); text-underline-offset: 3px; }
+a:hover { color: var(--color-accent-700); }
+button, select, summary { font-family: inherit; }
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+::selection { background: color-mix(in srgb, var(--color-accent) 30%, transparent); }
+
+.hr { height: 1px; border: 0; margin: var(--space-4) 0; background: var(--color-divider); }
+
+.field > label {
+  display: block; font-size: 12px; margin-bottom: 5px;
+  color: color-mix(in srgb, var(--color-text) 70%, transparent);
+}
+.input {
+  width: 100%; min-height: 36px; padding: 6px 10px; font: inherit;
+  font-size: 14px; color: var(--color-text); caret-color: var(--color-accent);
+  background: transparent;
+  border: 1px solid var(--color-divider); border-radius: var(--radius-md);
+}
+.input:hover { border-color: color-mix(in srgb, var(--color-text) 45%, transparent); }
+.input:focus-visible { border-color: var(--color-accent); outline-offset: 0; }
+
+.card {
+  display: flex; flex-direction: column; gap: var(--space-2);
+  padding: var(--space-3); border-radius: var(--radius-md);
+  background: transparent; border: 1px solid var(--color-divider);
+}
+.card-kicker { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); }
+
+.table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table th {
+  text-align: left; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-text) 60%, transparent);
+  padding: var(--space-2); border-bottom: 1px solid var(--color-divider);
+}
+.table td { padding: var(--space-2); border-bottom: 1px solid var(--color-divider); }
+.table tbody tr:hover { background: color-mix(in srgb, var(--color-text) 4%, transparent); }
+
+/* ── page-local ───────────────────────────────────────────────────────── */
+.seg-btn {
+  appearance: none; background: transparent; border: 0;
+  padding: 7px 14px; font-size: 12.5px; cursor: pointer;
+}
+.seg-btn:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
+
+details.settings { margin-top: var(--space-8); border-top: 1px solid var(--color-divider); padding-top: var(--space-3); }
+details.settings > summary {
+  cursor: pointer; font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-text) 45%, transparent); list-style: none;
+}
+details.settings > summary::-webkit-details-marker { display: none; }
+details.settings > summary::before { content: "▸ "; }
+details.settings[open] > summary::before { content: "▾ "; }
+.settings-grid {
+  display: flex; flex-wrap: wrap; gap: var(--space-4);
+  margin-top: var(--space-3); font-size: 12.5px;
+}
+.settings-grid label.chk { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; }
+.settings-grid .field { min-width: 220px; }
+.settings-grid select.input { min-height: 32px; font-size: 13px; }
+
+footer.credit {
+  margin-top: var(--space-6); padding-top: var(--space-3);
+  border-top: 1px solid var(--color-divider);
+  font-size: 11.5px; line-height: 1.8;
+  color: color-mix(in srgb, var(--color-text) 45%, transparent);
+}
+</style>
+</head>
+<body>
+<div style="min-height:100vh;background:var(--color-bg);color:var(--color-text)">
+  <div style="max-width:1220px;margin:0 auto;padding:var(--space-6) var(--space-4) var(--space-8)">
+
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:var(--space-6);padding-bottom:var(--space-3);border-bottom:1px solid var(--color-divider)">
+      <div style="flex:1 1 340px;min-width:0">
+        <div style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--color-accent)">中國笛 · 翻譜</div>
+        <h1 style="font-size:clamp(30px,4.6vw,48px);font-weight:400;line-height:1.05;margin:var(--space-2) 0 0">五線譜 → 首調簡譜</h1>
+      </div>
+      <p style="flex:1 1 280px;margin:0;font-size:13px;line-height:1.8;color:color-mix(in srgb,var(--color-text) 60%,transparent);text-wrap:pretty">指定調性、挑一支笛子，就得到整條音域的對照表：每個五線譜音的首調數字、實際音高，以及該用的筒音指法。</p>
+    </div>
+
+    <main id="app"></main>
+
+    <details class="settings" id="settings">
+      <summary>顯示設定</summary>
+      <div class="settings-grid">
+        <label class="chk"><input type="checkbox" data-set="showStaff" id="opt-staff"> 顯示五線譜</label>
+        <label class="chk"><input type="checkbox" data-set="hideUnplayable" id="opt-hide"> 隱藏吹不到的音</label>
+        <div class="field">
+          <label for="opt-oct">記譜八度</label>
+          <select class="input" data-set="staffOctave" id="opt-oct">
+            <option>低八度記譜（8va）</option>
+            <option>照實際音高</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="opt-set">笛子清單</label>
+          <select class="input" data-set="diziSet" id="opt-set">
+            <option>含大小管（大 G・大 A・小 C・小 D）</option>
+            <option>只列常用管</option>
+          </select>
+        </div>
+      </div>
+    </details>
+
+    <footer class="credit">
+      音高以十二平均律計算，筒音（六孔全按）＝笛子調名往上純四度的主音；音域取筒音起算 26 個半音（約兩個八度多）。
+      指法難易只看孔位是否自然，實際好不好吹仍受笛子個體、氣息與音準修飾影響。
+    </footer>
+
+  </div>
+</div>
+
+<script>
+(function () {
+'use strict';
+
+/* ── constants ─────────────────────────────────────────────────────────── */
+var LETTERS = ['C','D','E','F','G','A','B'];
+var SEMI = [0,2,4,5,7,9,11];
+var SHARP_ORDER = [3,0,4,1,5,2,6];
+var FLAT_ORDER = [6,2,5,1,4,0,3];
+var NATURAL = [0,2,4,5,7,9,10];
+var PC_NAMES = ['C','C♯','D','E♭','E','F','F♯','G','A♭','A','B♭','B'];
+var PATTERNS = [
+  ['C','C','C','C','C','C'],
+  ['H','C','C','C','C','C'],
+  ['O','C','C','C','C','C'],
+  ['O','H','C','C','C','C'],
+  ['O','O','C','C','C','C'],
+  ['O','O','O','C','C','C'],
+  ['O','O','O','H','C','C'],
+  ['O','O','O','O','C','C'],
+  ['O','O','O','O','H','C'],
+  ['O','O','O','O','O','C'],
+  ['O','O','O','O','O','O'],
+  ['O','O','O','O','O','O']
+];
+var MAJOR_TONIC = {
+  '0':[0,0],'1':[4,0],'2':[1,0],'3':[5,0],'4':[2,0],'5':[6,0],'6':[3,1],'7':[0,1],
+  '-1':[3,0],'-2':[6,-1],'-3':[2,-1],'-4':[5,-1],'-5':[1,-1],'-6':[4,-1],'-7':[0,-1]
+};
+var DIZI = [
+  {name:'大 G 調笛', sub:'低音大管', tong:62, special:true},
+  {name:'大 A 調笛', sub:'低音大管', tong:64, special:true},
+  {name:'C 調笛', sub:'低音', tong:67},
+  {name:'D 調笛', sub:'曲笛', tong:69},
+  {name:'E 調笛', sub:'', tong:71},
+  {name:'F 調笛', sub:'', tong:72},
+  {name:'G 調笛', sub:'梆笛', tong:74},
+  {name:'A 調笛', sub:'高音', tong:76},
+  {name:'B♭ 調笛', sub:'', tong:77},
+  {name:'小 C 調笛', sub:'高音小管', tong:79, special:true},
+  {name:'小 D 調笛', sub:'高音小管', tong:81, special:true}
+];
+var PREF = [5,2,1,6,4,3,7];
+var USAGE = {5:'本調・最常用',2:'常用',1:'常用',6:'次常用',4:'較少用',3:'少用',7:'罕用'};
+var LM = 156, SP = 44, TOP_OFF = 26, SPAN = 22, PAD = 24;
+var CLEF_FONT = '"Noto Serif TC", "Lora", Georgia, serif';
+
+/* ── state ─────────────────────────────────────────────────────────────── */
+var state = {
+  sig: 0, mode: 'major', dizi: null, readTong: null, clefInk: null,
+  showStaff: true,
+  hideUnplayable: true,
+  staffOctave: '低八度記譜（8va）',
+  diziSet: '含大小管（大 G・大 A・小 C・小 D）'
+};
+
+function setState(patch) { for (var k in patch) state[k] = patch[k]; render(); }
+
+/* ── music helpers ─────────────────────────────────────────────────────── */
+function letterOf(d) { return ((d % 7) + 7) % 7; }
+function midiOf(d, alter) { return 12 * (Math.floor(d / 7) + 1) + SEMI[letterOf(d)] + alter; }
+function pcName(m) { return PC_NAMES[((m % 12) + 12) % 12] + (Math.floor(m / 12) - 1); }
+function symOf(a) { return a > 0 ? '♯' : a < 0 ? '♭' : ''; }
+
+function ksAlter(sig, letter) {
+  if (sig > 0) return SHARP_ORDER.slice(0, sig).indexOf(letter) >= 0 ? 1 : 0;
+  if (sig < 0) return FLAT_ORDER.slice(0, -sig).indexOf(letter) >= 0 ? -1 : 0;
+  return 0;
+}
+function doPc(sig) { var t = MAJOR_TONIC[String(sig)]; return ((SEMI[t[0]] + t[1]) % 12 + 12) % 12; }
+
+function keyLabel(sig, mode) {
+  var t = MAJOR_TONIC[String(sig)];
+  if (mode === 'major') return LETTERS[t[0]] + symOf(t[1]) + ' 大調';
+  var ml = (t[0] + 5) % 7;
+  return LETTERS[ml] + symOf(ksAlter(sig, ml)) + ' 小調';
+}
+
+// the key signature that spells a given "do" pitch class with fewest accidentals
+function sigForDo(pc, prefer) {
+  var best = null;
+  for (var s = -7; s <= 7; s++) {
+    if (doPc(s) !== pc) continue;
+    var sc = Math.abs(s) + (prefer < 0 && s > 0 ? 0.5 : prefer > 0 && s < 0 ? 0.5 : 0);
+    if (!best || sc < best.sc) best = { s: s, sc: sc };
+  }
+  return best ? best.s : 0;
+}
+
+function finger(midi, tong, flip) {
+  var off = midi - tong;
+  var dead = [0,0,0,0,0,0].map(function () { return { w: '0%' }; });
+  if (off < 0) return { ok: false, holes: dead, note: '低於筒音' };
+  if (off > TOP_OFF) return { ok: false, holes: dead, note: '超出音域' };
+  var reg = Math.floor(off / 12), base = off % 12;
+  var pat = PATTERNS[base].slice().reverse();
+  if (flip) pat.reverse();
+  var holes = pat.map(function (c) { return { w: c === 'C' ? '100%' : c === 'H' ? '50%' : '0%' }; });
+  var bits = [];
+  if (reg === 1) bits.push('超吹');
+  if (reg === 2) bits.push('第三八度');
+  if (base === 11) bits.push('叉音');
+  else if (base === 1 || base === 3 || base === 6 || base === 8) bits.push('半孔');
+  return {
+    ok: true, holes: holes, extra: bits.join('・'),
+    hard: base === 11 || base === 1 || base === 3 || base === 6 || base === 8
+  };
+}
+
+// the 低音1 the ladder starts on: whichever octave puts the most of its
+// 22 notes inside this flute's range
+function anchor(sig, doLetter, tong) {
+  var best = { refD: doLetter + 28, n: -1 };
+  for (var k = 2; k <= 7; k++) {
+    var r = doLetter + 7 * k, n = 0;
+    for (var i = 0; i < SPAN; i++) {
+      var dd = r + i;
+      var off = midiOf(dd, ksAlter(sig, letterOf(dd))) - tong;
+      if (off >= 0 && off <= TOP_OFF) n++;
+    }
+    if (n > best.n) best = { refD: r, n: n };
+  }
+  return best;
+}
+
+/* ── the clef glyph's real ink box, so it can be fitted to the staff ────── */
+function measureClef() {
+  try {
+    var g = document.createElement('canvas').getContext('2d');
+    g.font = '100px ' + CLEF_FONT;
+    var m = g.measureText('𝄞');
+    if (!m || !m.actualBoundingBoxAscent) return;
+    var ink = {
+      a: m.actualBoundingBoxAscent, d: m.actualBoundingBoxDescent,
+      l: m.actualBoundingBoxLeft, r: m.actualBoundingBoxRight
+    };
+    var cur = state.clefInk;
+    if (!cur || Math.abs(cur.a - ink.a) > 0.5 || Math.abs(cur.d - ink.d) > 0.5) setState({ clefInk: ink });
+  } catch (e) { /* no canvas metrics */ }
+}
+
+/* ── derive everything the view needs ──────────────────────────────────── */
+function computeVals() {
+  var showStaff = state.showStaff !== false;
+  var hideUnplayable = state.hideUnplayable === true;
+  var flip = false;
+  var staffShift = state.staffOctave === '照實際音高' ? 0 : -1;
+  var pool = state.diziSet === '只列常用管'
+    ? DIZI.filter(function (z) { return !z.special; })
+    : DIZI;
+
+  var sig = state.sig, mode = state.mode;
+  var t = MAJOR_TONIC[String(sig)];
+  var doLetter = t[0], dp = doPc(sig);
+
+  // ── which flutes can play this key, and how comfortably ───────────
+  var rows = pool.map(function (zz) {
+    var iv = ((zz.tong % 12) - dp + 144) % 12;
+    var di = SEMI.indexOf(iv);
+    var X = di >= 0 ? di + 1 : null;
+    var diff = 0;
+    if (di >= 0) SEMI.forEach(function (s) {
+      var rel = ((s - SEMI[di]) % 12 + 12) % 12;
+      if (NATURAL.indexOf(rel) < 0) diff++;
+    });
+    var an = anchor(sig, doLetter, zz.tong);
+    var pen = (X ? diff * 3 + PREF.indexOf(X) : 60) - an.n * 0.2 + (zz.special ? 1.5 : 0);
+    var fit = '—', fitColor = 'inherit';
+    if (!X) { fit = '不適用'; fitColor = 'color-mix(in srgb, var(--color-text) 40%, transparent)'; }
+    else if (diff === 0) { fit = '全自然孔'; fitColor = 'var(--color-accent-700)'; }
+    else { fit = diff + ' 音需半孔'; }
+    return {
+      z: zz, X: X, diff: diff, pen: pen, fit: fit, fitColor: fitColor, refD: an.refD,
+      name: zz.name, sub: zz.sub,
+      usage: X ? USAGE[X] : '需變化筒音', tongLabel: X ? '作 ' + X : '—'
+    };
+  });
+
+  var rec = 0, bp = Infinity;
+  rows.forEach(function (r, i) { if (r.pen < bp) { bp = r.pen; rec = i; } });
+  var selIdx = rows.findIndex(function (r) { return r.name === state.dizi; });
+  if (selIdx < 0) selIdx = rec;
+
+  var diziRows = rows.map(function (r, i) {
+    return {
+      name: r.name, sub: r.sub, tongLabel: r.tongLabel, usage: r.usage,
+      fit: r.fit, fitColor: r.fitColor,
+      star: i === rec ? '★ ' : '',
+      op: r.X ? 1 : 0.5,
+      bg: i === selIdx ? 'color-mix(in srgb, var(--color-accent) 11%, transparent)' : 'transparent',
+      act: r.name
+    };
+  });
+
+  var sel = rows[selIdx];
+  var zsel = sel.z, refD = sel.refD;
+
+  // ── optional re-reading: same pitches, numbered off a different 筒音 ──
+  var natX = sel.X;
+  var readX = state.readTong || natX;
+  var read = null;
+  if (readX && readX !== natX) {
+    var readDoPc = (((zsel.tong % 12) - SEMI[readX - 1]) % 12 + 12) % 12;
+    var rsig = sigForDo(readDoPc, sig);
+    var rt = MAJOR_TONIC[String(rsig)];
+    read = { X: readX, sig: rsig, doLetter: rt[0], doName: LETTERS[rt[0]] + symOf(rt[1]) };
+    read.ref = read.doLetter + 7 * Math.floor((refD + 7 - read.doLetter) / 7);
+  }
+
+  // ── the ladder: 低音 1 up to 高高音 1 ─────────────────────────────
+  var all = [];
+  for (var i = 0; i < SPAN; i++) {
+    var d = refD + i;
+    var letter = letterOf(d);
+    var alter = ksAlter(sig, letter);
+    var midi = midiOf(d, alter);
+    var f = finger(midi, zsel.tong, flip);
+    var oct = Math.floor(i / 7) - 1;
+    var up = Math.max(0, oct), down = Math.max(0, -oct);
+    var rNum = '', rAcc = '', rUp = 0, rDown = 0;
+    if (read) {
+      var rdeg = ((letter - read.doLetter + 7) % 7) + 1;
+      var rdv = alter - ksAlter(read.sig, letter);
+      rAcc = rdv > 0 ? (rdv > 1 ? '♯♯' : '♯') : rdv < 0 ? (rdv < -1 ? '♭♭' : '♭') : '';
+      rNum = String(rdeg);
+      var rk = Math.floor((d - read.ref) / 7);
+      rUp = Math.min(Math.max(0, rk), 3);
+      rDown = Math.min(Math.max(0, -rk), 3);
+    }
+    all.push({
+      d: d, ds: d + 7 * staffShift, alter: alter, midi: midi, oct: oct,
+      ok: f.ok, hard: !!f.hard,
+      num: String((i % 7) + 1), up: up, down: down,
+      rNum: rNum, rAcc: rAcc, rUp: rUp, rDown: rDown,
+      note: f.ok
+        ? LETTERS[letter] + symOf(alter) + Math.floor(d / 7) + (f.extra ? ' · ' + f.extra : '')
+        : f.note,
+      color: f.ok ? 'var(--color-text)' : 'color-mix(in srgb, var(--color-text) 32%, transparent)'
+    });
+  }
+  var ladder = hideUnplayable ? all.filter(function (n) { return n.ok; }) : all;
+
+  // ── staff drawing ────────────────────────────────────────────────
+  var dMin = Math.min(28, ladder.length ? ladder[0].ds : 28);
+  var dMax = Math.max(40, ladder.length ? ladder[ladder.length - 1].ds : 40);
+  var yOf = function (d) { return PAD + (dMax - d) * 6; };
+  var svgH = PAD * 2 + (dMax - dMin) * 6;
+  var svgW = Math.max(600, LM + ladder.length * SP + 60);
+  var staffLines = [30, 32, 34, 36, 38].map(function (d) {
+    return { y: yOf(d), x1: 14, x2: svgW - 14 };
+  });
+
+  // the G clef, fitted to the staff: ink spans 1.5 spaces above the top line
+  // to 1.75 below the bottom one, the way an engraved clef sits
+  var ink = state.clefInk;
+  var clefSize = 62, clefX = 20, clefY = yOf(30) + 8, clefRight = 52;
+  if (ink) {
+    clefSize = 8700 / (ink.a + ink.d);
+    var k = clefSize / 100;
+    clefX = 22 + ink.l * k;
+    clefY = (yOf(38) - 18) + ink.a * k;
+    clefRight = clefX + ink.r * k;
+  }
+
+  var ksAccs = [];
+  var spos = sig > 0 ? [38, 35, 39, 36, 33, 37, 34] : [34, 37, 33, 36, 32, 35, 31];
+  var ks0 = clefRight + 22;
+  for (var a = 0; a < Math.abs(sig); a++) {
+    ksAccs.push({ x: ks0 + a * 12, y: yOf(spos[a]) + 7, sharp: sig > 0 });
+  }
+
+  var noteMarks = [], ledgers = [], cells = [], cells2 = [];
+  ladder.forEach(function (n, idx) {
+    var x = LM + idx * SP + SP / 2, y = yOf(n.ds), dd;
+    if (n.ds >= 40) for (dd = 40; dd <= n.ds; dd += 2) ledgers.push({ x1: x - 13, x2: x + 13, y: yOf(dd) });
+    if (n.ds <= 28) for (dd = 28; dd >= n.ds; dd -= 2) ledgers.push({ x1: x - 13, x2: x + 13, y: yOf(dd) });
+    var stemUp = n.ds < 34;
+    noteMarks.push({
+      x: x, y: y, op: n.ok ? 1 : 0.3,
+      fill: n.hard && n.ok ? 'var(--color-accent-700)' : 'var(--color-text)',
+      sx: stemUp ? x + 6.4 : x - 6.4, sy1: y, sy2: stemUp ? y - 27 : y + 27,
+      title: n.note
+    });
+    cells.push({ num: n.num, acc: '', up: n.up, down: n.down, color: n.color, title: n.note });
+    cells2.push({
+      num: n.rNum, acc: n.rAcc, up: n.rUp, down: n.rDown,
+      color: n.ok
+        ? (n.rAcc ? 'var(--color-accent-700)' : 'var(--color-text)')
+        : 'color-mix(in srgb, var(--color-text) 32%, transparent)'
+    });
+  });
+
+  var readAccCount = read ? all.filter(function (n) { return n.rAcc; }).length : 0;
+  var cur = state.readTong || 0;
+  var tongOpts = [{ v: 0, label: natX ? '依調性（作 ' + natX + '）' : '依調性（無）', act: 'auto' }]
+    .concat([1,2,3,4,5,6,7].map(function (x) {
+      return { v: x, label: '作 ' + x, act: String(x === natX ? 0 : x) };
+    }))
+    .map(function (o, i) {
+      var active = o.v === cur || (o.v === natX && cur === 0);
+      return {
+        label: o.label, act: o.act,
+        bl: i === 0 ? '0' : '1px solid var(--color-divider)',
+        color: active ? 'var(--color-accent)' : 'var(--color-text)',
+        ring: active ? 'inset 0 0 0 1px var(--color-accent)' : 'none'
+      };
+    });
+
+  var sigOptions = [];
+  for (var s = -7; s <= 7; s++) {
+    sigOptions.push({
+      v: String(s),
+      label: (s > 0 ? s + '♯' : s < 0 ? (-s) + '♭' : '無升降') + '　'
+        + keyLabel(s, 'major') + ' / ' + keyLabel(s, 'minor')
+    });
+  }
+
+  var playable = all.filter(function (n) { return n.ok; }).length;
+  var selDesc;
+  if (!sel.X) {
+    selDesc = '這支笛子的筒音在 ' + keyLabel(sig, mode)
+      + ' 裡不是自然音級，需要變化筒音（如筒音作 ♯4），實務上少用；建議改選有 ★ 的組合。';
+  } else {
+    var bits = ['筒音（六孔全按）＝ ' + pcName(zsel.tong) + '，音域約 '
+      + pcName(zsel.tong) + '–' + pcName(zsel.tong + TOP_OFF)];
+    bits.push(sel.diff === 0 ? '本調指法，七個音都落在自然孔位' : '音階中有 ' + sel.diff + ' 個音要半孔或叉音');
+    bits.push('下表 ' + SPAN + ' 個音中 ' + playable + ' 個吹得到');
+    selDesc = bits.join('；') + '。';
+  }
+
+  var modeOpts = [
+    { v: 'major', label: '大調' },
+    { v: 'minor', label: '小調' }
+  ].map(function (o, i) {
+    return {
+      label: o.label, act: o.v,
+      bl: i === 0 ? '0' : '1px solid var(--color-divider)',
+      color: o.v === mode ? 'var(--color-accent)' : 'var(--color-text)',
+      ring: o.v === mode ? 'inset 0 0 0 1px var(--color-accent)' : 'none'
+    };
+  });
+
+  return {
+    showStaff: showStaff,
+    keyName: keyLabel(sig, mode),
+    sigDesc: sig > 0 ? sig + ' 個升號' : sig < 0 ? (-sig) + ' 個降號' : '無升降記號',
+    tonicDesc: mode === 'major'
+      ? '首調以 1 ＝ ' + LETTERS[t[0]] + symOf(t[1]) + ' 為基準，數字譜依此標記。'
+      : '關係大調為 ' + keyLabel(sig, 'major') + '，首調以 1 ＝ ' + LETTERS[t[0]] + symOf(t[1]) + '、主音落在 6。',
+    sigValue: String(sig),
+    modeOpts: modeOpts,
+    sigOptions: sigOptions,
+    pickHint: '以 ' + keyLabel(sig, mode) + ' 計算各支笛子的筒音指法。★ 為最順的一支；點一列即可切換。',
+    diziRows: diziRows,
+    selHeading: sel.X ? zsel.name + '　筒音作 ' + sel.X : zsel.name + '　筒音為變化音',
+    selDesc: selDesc,
+    svgW: svgW, svgH: svgH,
+    clefX: clefX, clefY: clefY, clefSize: clefSize,
+    staffLines: staffLines, ksAccs: ksAccs, ledgers: ledgers, noteMarks: noteMarks,
+    cells: cells, cells2: cells2,
+    staffOtt: staffShift !== 0, ottX: LM - 6, ottY: yOf(40) - 6,
+    hasRead: !!read,
+    readLabel: read ? '筒音作 ' + read.X : '',
+    rowLabel: '首調　1 ＝ ' + LETTERS[t[0]] + symOf(t[1]),
+    tongOpts: tongOpts,
+    readNote: read
+      ? '同樣的指法、同樣的音高 — 只是把譜改用「筒音作 ' + read.X + '」的數字來讀，相當於以 '
+        + read.doName + ' 為 1。' + (readAccCount ? '其中 ' + readAccCount + ' 個音會帶升降記號。' : '')
+      : (natX
+        ? '目前用這支笛子在本調下的自然讀法「筒音作 ' + natX + '」。想換成別的筒音讀法，按上面的數字。'
+        : '這支笛子的筒音在本調不是自然音級，請從上面選一個筒音讀法。'),
+    ladderHint: '低音 1（一點在下）到高高音 1（兩點在上）共 ' + SPAN + ' 個音，淡色為超出這支笛子音域的音。'
+      + (staffShift ? '五線譜依笛譜慣例以低八度記譜（8va），實際音高高八度。' : '')
+  };
+}
+
+/* ── view ──────────────────────────────────────────────────────────────── */
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+function dots(n) {
+  var out = '';
+  for (var i = 0; i < n; i++) out += '<span style="width:3.5px;height:3.5px;border-radius:50%;background:currentColor;display:block"></span>';
+  return out;
+}
+function numRow(list, label, labelColor, bg, svgW) {
+  return '<div style="display:flex;align-items:stretch;border-top:1px solid var(--color-divider);min-width:' + svgW + 'px;background:' + bg + '">'
+    + '<div style="width:156px;flex:none;display:flex;align-items:center;justify-content:flex-end;padding:var(--space-2) var(--space-3) var(--space-2) 0;font-size:11px;letter-spacing:.04em;color:' + labelColor + ';text-align:right">' + esc(label) + '</div>'
+    + list.map(function (c) {
+      return '<div' + (c.title ? ' title="' + esc(c.title) + '"' : '')
+        + ' style="width:44px;flex:none;display:flex;flex-direction:column;align-items:center;padding:var(--space-2) 0;color:' + c.color + '">'
+        + '<div style="height:11px;display:flex;gap:3px;align-items:center">' + dots(c.up) + '</div>'
+        + '<div style="font-size:20px;line-height:1.1;font-feature-settings:\'tnum\';display:flex;align-items:baseline">'
+        + '<span style="font-size:12px;opacity:.78">' + esc(c.acc) + '</span><span>' + esc(c.num) + '</span></div>'
+        + '<div style="height:11px;display:flex;gap:3px;align-items:center">' + dots(c.down) + '</div>'
+        + '</div>';
+    }).join('')
+    + '</div>';
+}
+
+function segGroup(opts, act) {
+  return opts.map(function (o) {
+    return '<button class="seg-btn" data-act="' + act + '" data-v="' + esc(o.act) + '"'
+      + ' style="border-left:' + o.bl + ';color:' + o.color + ';box-shadow:' + o.ring + ';white-space:nowrap">'
+      + esc(o.label) + '</button>';
+  }).join('');
+}
+
+function staffSvg(v) {
+  var s = '<svg width="' + v.svgW + '" height="' + v.svgH + '" viewBox="0 0 ' + v.svgW + ' ' + v.svgH + '" style="display:block" role="img" aria-label="五線譜音階">';
+  s += v.staffLines.map(function (l) {
+    return '<line x1="' + l.x1 + '" y1="' + l.y + '" x2="' + l.x2 + '" y2="' + l.y + '" style="stroke:var(--color-text);stroke-width:0.9;opacity:.55"></line>';
+  }).join('');
+  s += '<text x="' + v.clefX + '" y="' + v.clefY + '" style="font-size:' + v.clefSize + 'px;fill:var(--color-text);font-family:' + CLEF_FONT + ';opacity:.85">&#119070;</text>';
+  if (v.staffOtt) {
+    s += '<text x="' + v.ottX + '" y="' + v.ottY + '" style="font-size:15px;font-style:italic;fill:var(--color-accent-700);text-anchor:end;font-family:\'Cormorant Garamond\',serif;letter-spacing:.04em">8va</text>';
+  }
+  s += v.ksAccs.map(function (a) {
+    return '<text x="' + a.x + '" y="' + a.y + '" style="font-size:20px;fill:var(--color-accent-700);text-anchor:middle;font-family:\'Noto Serif TC\',serif">'
+      + (a.sharp ? '&#9839;' : '&#9837;') + '</text>';
+  }).join('');
+  s += v.ledgers.map(function (g) {
+    return '<line x1="' + g.x1 + '" y1="' + g.y + '" x2="' + g.x2 + '" y2="' + g.y + '" style="stroke:var(--color-text);stroke-width:0.9;opacity:.5"></line>';
+  }).join('');
+  s += v.noteMarks.map(function (n) {
+    return '<g style="opacity:' + n.op + '"><title>' + esc(n.title) + '</title>'
+      + '<line x1="' + n.sx + '" y1="' + n.sy1 + '" x2="' + n.sx + '" y2="' + n.sy2 + '" style="stroke:' + n.fill + ';stroke-width:1.4"></line>'
+      + '<ellipse cx="' + n.x + '" cy="' + n.y + '" rx="6.8" ry="4.9" transform="rotate(-17 ' + n.x + ' ' + n.y + ')" style="fill:' + n.fill + '"></ellipse>'
+      + '</g>';
+  }).join('');
+  return s + '</svg>';
+}
+
+function view(v) {
+  var h = '';
+
+  h += '<div style="display:flex;flex-wrap:wrap;gap:var(--space-6);margin-top:var(--space-6);align-items:flex-start">';
+
+  /* 一 · 調性 */
+  h += '<div class="card" style="flex:1 1 300px;min-width:0;gap:var(--space-3)">'
+    + '<div class="card-kicker">一 · 調性</div>'
+    + '<div style="display:flex;align-items:baseline;gap:var(--space-3);flex-wrap:wrap">'
+    + '<div style="font-family:var(--font-heading);font-size:38px;line-height:1;font-weight:400;font-feature-settings:\'tnum\'">' + esc(v.keyName) + '</div>'
+    + '<div style="font-size:11.5px;letter-spacing:.06em;color:color-mix(in srgb,var(--color-text) 52%,transparent)">' + esc(v.sigDesc) + '</div>'
+    + '</div>'
+    + '<div style="font-size:12.5px;line-height:1.75;color:color-mix(in srgb,var(--color-text) 68%,transparent);text-wrap:pretty">' + esc(v.tonicDesc) + '</div>'
+    + '<hr class="hr" style="margin:var(--space-1) 0">'
+    + '<div class="field"><label for="sig-select">調號</label>'
+    + '<select class="input" id="sig-select" data-k="sig-select" data-act="sig">'
+    + v.sigOptions.map(function (o) {
+      return '<option value="' + esc(o.v) + '"' + (o.v === v.sigValue ? ' selected' : '') + '>' + esc(o.label) + '</option>';
+    }).join('')
+    + '</select></div>'
+    + '<div><div style="font-size:12px;margin-bottom:5px;color:color-mix(in srgb,var(--color-text) 70%,transparent)">大調 / 小調</div>'
+    + '<div style="display:inline-flex;border:1px solid var(--color-divider);border-radius:var(--radius-md);overflow:hidden">'
+    + segGroup(v.modeOpts, 'mode') + '</div></div>'
+    + '</div>';
+
+  /* 二 · 選笛 */
+  h += '<div class="card" style="flex:1.4 1 340px;min-width:0;gap:var(--space-2)">'
+    + '<div class="card-kicker">二 · 選笛</div>'
+    + '<div style="font-size:12.5px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 62%,transparent)">' + esc(v.pickHint) + '</div>'
+    + '<div style="overflow-x:auto;margin:0 calc(var(--space-3) * -1) calc(var(--space-2) * -1)">'
+    + '<table class="table" style="font-size:13px"><thead><tr>'
+    + '<th style="padding-left:var(--space-3)">笛子</th><th>筒音</th><th>常用度</th>'
+    + '<th style="padding-right:var(--space-3)">音階</th></tr></thead><tbody>'
+    + v.diziRows.map(function (r) {
+      return '<tr tabindex="0" role="button" data-act="dizi" data-v="' + esc(r.act) + '"'
+        + ' style="cursor:pointer;background:' + r.bg + ';opacity:' + r.op + '">'
+        + '<td style="padding-left:var(--space-3);white-space:nowrap">'
+        + '<span style="color:var(--color-accent)">' + esc(r.star) + '</span>' + esc(r.name)
+        + ' <span style="font-size:11px;color:color-mix(in srgb,var(--color-text) 45%,transparent)">' + esc(r.sub) + '</span></td>'
+        + '<td style="white-space:nowrap;font-feature-settings:\'tnum\'">' + esc(r.tongLabel) + '</td>'
+        + '<td style="white-space:nowrap;font-size:12px">' + esc(r.usage) + '</td>'
+        + '<td style="padding-right:var(--space-3);white-space:nowrap;font-size:12px;color:' + r.fitColor + '">' + esc(r.fit) + '</td>'
+        + '</tr>';
+    }).join('')
+    + '</tbody></table></div></div>';
+
+  h += '</div>';
+
+  /* 三 · 對照表 */
+  h += '<div style="margin-top:var(--space-8);padding-top:var(--space-4);border-top:1px solid var(--color-divider)">'
+    + '<div class="card-kicker" style="margin-bottom:var(--space-2)">三 · 對照表</div>'
+    + '<div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--space-4)">'
+    + '<h2 style="font-size:30px;font-weight:400;margin:0;font-feature-settings:\'tnum\'">' + esc(v.selHeading) + '</h2>'
+    + '<div style="font-size:12.5px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 62%,transparent);flex:1 1 260px;text-wrap:pretty">' + esc(v.selDesc) + '</div>'
+    + '</div>'
+    + '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-3);margin-top:var(--space-4)">'
+    + '<span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 42%,transparent)">筒音讀法</span>'
+    + '<div style="display:inline-flex;border:1px solid var(--color-divider);border-radius:var(--radius-md);overflow:hidden;flex-wrap:nowrap;max-width:100%;overflow-x:auto">'
+    + segGroup(v.tongOpts, 'tong') + '</div></div>'
+    + '<div style="font-size:12.5px;line-height:1.75;margin-top:var(--space-2);color:color-mix(in srgb,var(--color-text) 62%,transparent);text-wrap:pretty">' + esc(v.readNote) + '</div>';
+
+  if (v.showStaff) {
+    h += '<div style="margin-top:var(--space-4);border:1px solid var(--color-divider);border-radius:var(--radius-md);background:color-mix(in srgb,#fff 55%,transparent);overflow-x:auto;overflow-y:hidden">'
+      + staffSvg(v)
+      + numRow(v.cells, v.rowLabel, 'color-mix(in srgb,var(--color-text) 45%,transparent)', 'color-mix(in srgb,var(--color-accent) 4%,transparent)', v.svgW);
+    if (v.hasRead) {
+      h += numRow(v.cells2, v.readLabel, 'var(--color-accent-700)', 'color-mix(in srgb,var(--color-accent) 9%,transparent)', v.svgW);
+    }
+    h += '</div>';
+  }
+
+  h += '<div style="font-size:12.5px;line-height:1.75;color:color-mix(in srgb,var(--color-text) 50%,transparent);margin-top:var(--space-3);text-wrap:pretty">' + esc(v.ladderHint) + '</div>'
+    + '</div>';
+
+  return h;
+}
+
+/* ── wiring ────────────────────────────────────────────────────────────── */
+var app = document.getElementById('app');
+
+function render() {
+  var refocus = document.activeElement && document.activeElement.dataset
+    ? document.activeElement.dataset.k : null;
+  app.innerHTML = view(computeVals());
+  if (refocus) {
+    var el = app.querySelector('[data-k="' + refocus + '"]');
+    if (el) el.focus();
+  }
+}
+
+function act(target) {
+  var a = target.getAttribute('data-act'), val = target.getAttribute('data-v');
+  if (a === 'mode') setState({ mode: val });
+  else if (a === 'dizi') setState({ dizi: val });
+  else if (a === 'tong') setState({ readTong: val === 'auto' || val === '0' ? null : parseInt(val, 10) });
+}
+
+app.addEventListener('click', function (e) {
+  var t = e.target.closest('[data-act]');
+  if (!t || t.tagName === 'SELECT') return;
+  act(t);
+});
+app.addEventListener('keydown', function (e) {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  var t = e.target.closest && e.target.closest('tr[data-act]');
+  if (!t) return;
+  e.preventDefault();
+  act(t);
+});
+app.addEventListener('change', function (e) {
+  if (e.target.getAttribute('data-act') === 'sig') {
+    setState({ sig: parseInt(e.target.value, 10), dizi: null });
+  }
+});
+
+var settings = document.getElementById('settings');
+document.getElementById('opt-staff').checked = state.showStaff;
+document.getElementById('opt-hide').checked = state.hideUnplayable;
+document.getElementById('opt-oct').value = state.staffOctave;
+document.getElementById('opt-set').value = state.diziSet;
+settings.addEventListener('change', function (e) {
+  var key = e.target.getAttribute('data-set');
+  if (!key) return;
+  var patch = {};
+  patch[key] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+  if (key === 'diziSet') patch.dizi = null;
+  setState(patch);
+});
+
+render();
+measureClef();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureClef);
+})();
+</script>
+</body>
+</html>

@@ -68,3 +68,8 @@ preserveTaxonomyNames = true
     name = "標籤"
     url = "/tags/"
     weight = 20
+  [[menu.main]]
+    identifier = "dizi"
+    name = "笛子翻譜"
+    url = "/dizi/"
+    weight = 30
