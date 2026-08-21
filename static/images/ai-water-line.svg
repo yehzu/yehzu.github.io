@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="以水位比喻 AI 接手工作的程度：水面下是 AI 已接手，水面上是仍須自己做，水下再分清濁，岸上是 AI 幫你備戰">
+  <style>
+    text { font-family: -apple-system, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif; fill: #3b4650; }
+    .lbl  { font-size: 14px; text-anchor: middle; }
+    .note { font-size: 13px; fill: #6b7783; }
+    .tag  { font-size: 13px; font-weight: 600; }
+  </style>
+
+  <!-- 天空／水面上 -->
+  <rect x="0" y="0" width="800" height="200" fill="#fbfcfd"/>
+  <!-- 水體 -->
+  <rect x="0" y="200" width="800" height="200" fill="#dceaf5"/>
+  <!-- 岸 -->
+  <path d="M0 200 L118 200 L118 400 L0 400 Z" fill="#ece0c8"/>
+  <path d="M118 200 L138 200 L118 400 Z" fill="#e3d4b4"/>
+  <!-- 水面線 -->
+  <line x1="118" y1="200" x2="800" y2="200" stroke="#5b8db8" stroke-width="2"/>
+  <text class="tag" x="128" y="192" fill="#3f6f96">水面</text>
+
+  <!-- 岸上標籤 -->
+  <text class="tag" x="59" y="120" text-anchor="middle" fill="#8a6d33">岸上</text>
+  <text class="note" x="59" y="142" text-anchor="middle">AI 陪你</text>
+  <text class="note" x="59" y="160" text-anchor="middle">備戰</text>
+  <text class="note" x="59" y="252" text-anchor="middle">沙盤推演</text>
+  <text class="note" x="59" y="272" text-anchor="middle">整理</text>
+  <text class="note" x="59" y="292" text-anchor="middle">talking</text>
+  <text class="note" x="59" y="312" text-anchor="middle">points</text>
+
+  <!-- 柱子：x, 水面上高度, 水下深度 -->
+  <!-- 1 會議記錄：深水、混濁 -->
+  <rect x="170" y="175" width="72" height="25"  fill="#93a7b5"/>
+  <rect x="170" y="200" width="72" height="145" fill="#cda63f"/>
+  <!-- 2 程式碼初版：深水、清 -->
+  <rect x="278" y="180" width="72" height="20"  fill="#93a7b5"/>
+  <rect x="278" y="200" width="72" height="150" fill="#5a9bd4"/>
+  <!-- 3 專案風險判斷：中水、混濁 -->
+  <rect x="386" y="125" width="72" height="75"  fill="#93a7b5"/>
+  <rect x="386" y="200" width="72" height="95"  fill="#cda63f"/>
+  <!-- 4 1:1：淺水 -->
+  <rect x="494" y="70"  width="72" height="130" fill="#93a7b5"/>
+  <rect x="494" y="200" width="72" height="40"  fill="#5a9bd4"/>
+  <!-- 5 模糊中拍板：極淺 -->
+  <rect x="602" y="50"  width="72" height="150" fill="#93a7b5"/>
+  <rect x="602" y="200" width="72" height="20"  fill="#5a9bd4"/>
+
+  <!-- 岸上陪練的箭頭：指向 1:1 露出水面的那一段 -->
+  <path d="M104 108 C 260 76, 380 62, 488 96" stroke="#b08d3f" stroke-width="1.6" fill="none" stroke-dasharray="5 4"/>
+  <path d="M488 96 l -12 -6 l 3 10 z" fill="#b08d3f"/>
+
+  <!-- 柱子標籤 -->
+  <text class="lbl" x="206" y="372">會議記錄</text>
+  <text class="lbl" x="314" y="372">程式碼初版</text>
+  <text class="lbl" x="422" y="372">專案風險</text>
+  <text class="lbl" x="422" y="390">判斷</text>
+  <text class="lbl" x="530" y="372">1:1</text>
+  <text class="lbl" x="638" y="372">模糊中拍板</text>
+
+  <!-- 圖例 -->
+  <rect x="170" y="420" width="14" height="14" fill="#93a7b5"/>
+  <text class="note" x="192" y="432">水面上：還得你自己來</text>
+  <rect x="352" y="420" width="14" height="14" fill="#5a9bd4"/>
+  <text class="note" x="374" y="432">清：AI 真的做完了</text>
+  <rect x="516" y="420" width="14" height="14" fill="#cda63f"/>
+  <text class="note" x="538" y="432">濁：看似做完、實則會錯</text>
+</svg>
